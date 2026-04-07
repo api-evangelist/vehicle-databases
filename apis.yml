@@ -1,8 +1,8 @@
 aid: vehicle-databases
 name: Vehicle Databases
 description: >-
-  Get the maintenance schedules for any vehicle - OEM compliant schedules up to
-  200,000  m. with vehicle maintenance API 
+  Get the maintenance schedules for any vehicle - OEM compliant schedules up to 200,000
+  m. with vehicle maintenance API.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -18,8 +18,8 @@ apis:
   - aid: vehicle-databases:vehicle-databases
     name: Vehicle Databases
     description: >-
-      Get the maintenance schedules for any vehicle - OEM compliant schedules up
-      to 200,000  m. with vehicle maintenance API 
+      Get the maintenance schedules for any vehicle - OEM compliant schedules up to
+      200,000 m. with vehicle maintenance API.
     humanURL: ' https://vehicledatabases.com/vehicle-maintenance-api'
     tags:
       - API
