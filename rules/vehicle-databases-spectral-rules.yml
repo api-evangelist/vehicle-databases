@@ -1,0 +1,197 @@
+rules:
+
+  # INFO
+  info-title-required:
+    description: Info title must be defined.
+    severity: error
+    given: "$.info"
+    then:
+      field: title
+      function: truthy
+
+  info-description-required:
+    description: Info description must be non-empty.
+    severity: warn
+    given: "$.info"
+    then:
+      field: description
+      function: truthy
+
+  info-version-required:
+    description: API version must be defined.
+    severity: error
+    given: "$.info"
+    then:
+      field: version
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version-3:
+    description: Must use OpenAPI 3.x.
+    severity: error
+    given: "$"
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: "^3\\."
+
+  # SERVERS
+  servers-defined:
+    description: At least one server must be defined.
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  servers-https:
+    description: Server URLs must use HTTPS.
+    severity: error
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  # PATHS
+  paths-kebab-case:
+    description: Path segments should use kebab-case.
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9{}_/-]+)+$"
+
+  # OPERATIONS
+  operation-summary-required:
+    description: Every operation must have a summary.
+    severity: error
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-prefix:
+    description: Operation summaries must start with "Vehicle Databases".
+    severity: warn
+    given: "$.paths[*][get,post,put,delete,patch].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Vehicle Databases "
+
+  operation-description-required:
+    description: Every operation must have a description.
+    severity: warn
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      field: description
+      function: truthy
+
+  operation-operationid-required:
+    description: Every operation must have an operationId.
+    severity: error
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camelcase:
+    description: operationId must use camelCase.
+    severity: warn
+    given: "$.paths[*][get,post,put,delete,patch].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  operation-tags-required:
+    description: Every operation must have at least one tag.
+    severity: warn
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      field: tags
+      function: truthy
+
+  # PARAMETERS
+  parameter-description-required:
+    description: All parameters must have a description.
+    severity: warn
+    given: "$..parameters[*]"
+    then:
+      field: description
+      function: truthy
+
+  # RESPONSES
+  response-success-required:
+    description: Every operation must have a 2xx response.
+    severity: error
+    given: "$.paths[*][get,post,put,delete,patch].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["200"]
+            - required: ["201"]
+
+  response-404-defined:
+    description: Operations with path parameters should define 404 responses.
+    severity: warn
+    given: "$.paths[*][get].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["404"]
+
+  # SCHEMAS
+  schema-description-required:
+    description: Component schemas must have descriptions.
+    severity: warn
+    given: "$.components.schemas[*]"
+    then:
+      field: description
+      function: truthy
+
+  # SECURITY
+  security-schemes-defined:
+    description: Security schemes must be defined.
+    severity: error
+    given: "$.components"
+    then:
+      field: securitySchemes
+      function: truthy
+
+  security-apikey-header:
+    description: API key authentication should use header placement (X-API-Key).
+    severity: info
+    given: "$.components.securitySchemes[?(@.type == 'apiKey')]"
+    then:
+      field: in
+      function: pattern
+      functionOptions:
+        match: "^header$"
+
+  # HTTP METHODS
+  get-no-request-body:
+    description: GET operations must not have a request body.
+    severity: error
+    given: "$.paths[*].get"
+    then:
+      field: requestBody
+      function: falsy
+
+  # GENERAL
+  no-empty-descriptions:
+    description: Descriptions must not be empty.
+    severity: warn
+    given: "$..description"
+    then:
+      function: pattern
+      functionOptions:
+        match: ".+"

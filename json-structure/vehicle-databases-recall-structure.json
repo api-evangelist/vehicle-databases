@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vehicle-databases/refs/heads/main/json-structure/vehicle-databases-recall-structure.json",
+  "name": "Recall",
+  "description": "NHTSA safety recall for a vehicle",
+  "type": "object",
+  "properties": {
+    "recallId": {
+      "type": "string",
+      "description": "NHTSA recall identifier",
+      "example": "22V-123"
+    },
+    "component": {
+      "type": "string",
+      "description": "Vehicle component affected",
+      "example": "Air Bags"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Recall risk summary"
+    },
+    "recallDate": {
+      "type": "date",
+      "description": "Recall initiation date",
+      "example": "2022-06-15"
+    },
+    "remedyDate": {
+      "type": "date",
+      "description": "Remedy available date",
+      "example": "2022-09-01"
+    },
+    "remedyDescription": {
+      "type": "string",
+      "description": "Description of the remedy"
+    },
+    "remedyStatus": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "available",
+        "complete"
+      ],
+      "description": "Recall remedy status"
+    }
+  }
+}

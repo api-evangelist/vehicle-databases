@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vehicle-databases/refs/heads/main/json-structure/vehicle-databases-maintenance-interval-structure.json",
+  "name": "MaintenanceInterval",
+  "description": "A single mileage/time-based maintenance interval",
+  "type": "object",
+  "properties": {
+    "mileage": {
+      "type": "int32",
+      "description": "Service mileage interval",
+      "example": 50000
+    },
+    "months": {
+      "type": "int32",
+      "description": "Time-based interval in months",
+      "example": 48
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable interval label",
+      "example": "50,000 Mile Service"
+    },
+    "services": {
+      "type": "array",
+      "description": "Service items required at this interval",
+      "items": {
+        "$ref": "#/components/schemas/ServiceItem"
+      }
+    }
+  }
+}

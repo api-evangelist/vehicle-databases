@@ -1,0 +1,230 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Vehicle Databases"
+  description: >-
+    Unified vocabulary for the Vehicle Databases Maintenance API covering vehicle
+    identification, OEM maintenance schedules, service items, NHTSA recalls, and
+    technical service bulletins.
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+operational:
+  apis:
+    - name: Vehicle Databases Maintenance API
+      namespace: vehicle-databases
+      version: "1.0"
+      baseUrl: "https://api.vehicledatabases.com/v1"
+      status: active
+
+  resources:
+    - name: vehicles
+      description: "Vehicle identification by make/model/year and VIN decoding"
+      actions: [lookup, decode]
+    - name: maintenance
+      description: "OEM-compliant maintenance schedules with service intervals"
+      actions: [get]
+    - name: services
+      description: "Individual service items with fluid specs and part numbers"
+      actions: [list]
+    - name: recalls
+      description: "NHTSA safety recall data linked to specific vehicles"
+      actions: [get]
+    - name: tsbs
+      description: "OEM technical service bulletins with symptoms and remedies"
+      actions: [get]
+
+  actions:
+    - name: lookup
+      httpMethod: GET
+      pattern: read
+      description: "Find vehicles by make, model, and year"
+    - name: decode
+      httpMethod: GET
+      pattern: read
+      description: "Decode a VIN to full vehicle details"
+    - name: get
+      httpMethod: GET
+      pattern: read
+      description: "Retrieve a complete maintenance, recall, or TSB record"
+    - name: list
+      httpMethod: GET
+      pattern: read
+      description: "List service items for a maintenance interval"
+
+  schemas:
+    core:
+      - name: VehicleDetail
+        description: "Vehicle identity: make, model, year, engine, trim, body, fuel type"
+        key_properties: [vin, vehicleId, make, model, year, engine, trim, bodyStyle, fuelType]
+    maintenance:
+      - name: MaintenanceSchedule
+        description: "Complete OEM schedule with all service intervals to 200k miles"
+        key_properties: [vehicleId, make, model, year, intervals]
+      - name: MaintenanceInterval
+        description: "Single mileage/time service interval with required services"
+        key_properties: [mileage, months, label, services]
+      - name: ServiceItem
+        description: "Individual service with fluid spec, part number, and labor estimate"
+        key_properties: [serviceId, name, category, fluidSpec, quantity, laborHours]
+    safety:
+      - name: Recall
+        description: "NHTSA safety recall with component, risk, and remedy data"
+        key_properties: [recallId, component, summary, recallDate, remedyStatus]
+      - name: TSB
+        description: "OEM technical service bulletin with symptoms and remedy"
+        key_properties: [tsbId, title, category, issueDate, symptoms, remedy]
+
+  parameters:
+    identification:
+      - name: vehicleId
+        type: string
+        description: "Internal vehicle identifier (make-model-year-engine format)"
+      - name: vin
+        type: string
+        description: "17-character Vehicle Identification Number"
+    vehicle_lookup:
+      - name: make
+        type: string
+        description: "Vehicle manufacturer brand name"
+      - name: model
+        type: string
+        description: "Vehicle model name"
+      - name: year
+        type: integer
+        description: "4-digit model year (1980-2026)"
+    maintenance_filters:
+      - name: mileage
+        type: integer
+        description: "Current vehicle mileage for filtering upcoming services"
+      - name: includeItems
+        type: boolean
+        description: "Include detailed service items in maintenance schedule response"
+      - name: category
+        type: string
+        description: "TSB category filter (Engine, Electrical, HVAC, etc.)"
+
+  enums:
+    service_categories:
+      - Engine
+      - Transmission
+      - Brakes
+      - Tires
+      - Electrical
+      - HVAC
+      - Fuel
+      - Cooling
+      - Suspension
+      - Body
+    recall_remedy_status:
+      - pending
+      - available
+      - complete
+    drive_types:
+      - FWD
+      - RWD
+      - AWD
+      - 4WD
+    fuel_types:
+      - Gasoline
+      - Diesel
+      - Hybrid
+      - Electric
+      - Plug-In Hybrid
+
+  authentication:
+    schemes:
+      - name: ApiKey
+        type: apiKey
+        placement: header
+        headerName: X-API-Key
+        description: "Vehicle Databases API key passed in X-API-Key header"
+
+capability:
+  workflows:
+    - name: Vehicle Maintenance
+      file: capabilities/vehicle-maintenance.yaml
+      description: >-
+        End-to-end vehicle maintenance management workflow combining VIN decoding,
+        OEM schedules, service items, recalls, and TSBs for fleet managers and shops.
+      apis_combined:
+        - vehicle-databases
+      tool_count: 6
+      personas:
+        - Fleet Manager
+        - Service Advisor
+        - Vehicle Owner
+
+  personas:
+    - id: fleet-manager
+      name: Fleet Manager
+      description: >-
+        Manages maintenance scheduling for commercial fleets using OEM-compliant
+        service intervals, mileage tracking, and recall monitoring.
+      workflows:
+        - Vehicle Maintenance
+    - id: service-advisor
+      name: Service Advisor
+      description: >-
+        Looks up maintenance schedules, service items, and TSBs to provide
+        accurate service recommendations and labor estimates to customers.
+      workflows:
+        - Vehicle Maintenance
+    - id: vehicle-owner
+      name: Vehicle Owner
+      description: >-
+        Tracks maintenance schedule, checks for safety recalls, and gets
+        OEM service recommendations based on their specific vehicle and mileage.
+      workflows:
+        - Vehicle Maintenance
+
+  domains:
+    - name: Vehicle Identification
+      description: "VIN decoding and make/model/year vehicle lookup"
+      resources: [vehicles]
+      workflows: [Vehicle Maintenance]
+    - name: Maintenance Planning
+      description: "OEM maintenance schedules and service intervals"
+      resources: [maintenance, services]
+      workflows: [Vehicle Maintenance]
+    - name: Safety Compliance
+      description: "NHTSA recalls and technical service bulletins"
+      resources: [recalls, tsbs]
+      workflows: [Vehicle Maintenance]
+
+  namespaces:
+    consumed:
+      - vehicle-databases
+    rest_exposed:
+      - name: vehicle-maintenance-api
+        port: 8080
+    mcp_exposed:
+      - name: vehicle-maintenance-mcp
+        port: 9090
+
+  binds:
+    - name: VEHICLE_DATABASES_API_KEY
+      description: "Vehicle Databases API key"
+      workflows: [Vehicle Maintenance]
+
+crossReference:
+  - resource: vehicles
+    operations: [lookupVehicle, decodeVin]
+    workflows: [Vehicle Maintenance]
+    personas: [Fleet Manager, Service Advisor, Vehicle Owner]
+  - resource: maintenance
+    operations: [getMaintenanceSchedule]
+    workflows: [Vehicle Maintenance]
+    personas: [Fleet Manager, Service Advisor, Vehicle Owner]
+  - resource: services
+    operations: [listServiceItems]
+    workflows: [Vehicle Maintenance]
+    personas: [Service Advisor, Fleet Manager]
+  - resource: recalls
+    operations: [getRecalls]
+    workflows: [Vehicle Maintenance]
+    personas: [Fleet Manager, Vehicle Owner, Service Advisor]
+  - resource: tsbs
+    operations: [getTSBs]
+    workflows: [Vehicle Maintenance]
+    personas: [Service Advisor]

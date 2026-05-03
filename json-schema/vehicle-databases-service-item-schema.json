@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vehicle-databases/refs/heads/main/json-schema/vehicle-databases-service-item-schema.json",
+  "title": "ServiceItem",
+  "description": "Individual service item within a maintenance interval",
+  "type": "object",
+  "properties": {
+    "serviceId": {
+      "type": "string",
+      "description": "Service identifier",
+      "example": "oil-change"
+    },
+    "name": {
+      "type": "string",
+      "description": "Service name",
+      "example": "Engine Oil and Filter Change"
+    },
+    "category": {
+      "type": "string",
+      "description": "Service category",
+      "enum": [
+        "Engine",
+        "Transmission",
+        "Brakes",
+        "Tires",
+        "Electrical",
+        "HVAC",
+        "Fuel",
+        "Cooling",
+        "Suspension",
+        "Body"
+      ],
+      "example": "Engine"
+    },
+    "description": {
+      "type": "string",
+      "description": "Service procedure description"
+    },
+    "fluidSpec": {
+      "type": "string",
+      "description": "Required fluid specification",
+      "example": "0W-20 Full Synthetic"
+    },
+    "quantity": {
+      "type": "string",
+      "description": "Fluid or part quantity required",
+      "example": "5 quarts"
+    },
+    "laborHours": {
+      "type": "number",
+      "description": "Estimated labor time in hours",
+      "example": 0.5
+    },
+    "oilFilterPartNumber": {
+      "type": "string",
+      "description": "OEM part number",
+      "example": "04152-YZZA1"
+    },
+    "intervalMiles": {
+      "type": "integer",
+      "description": "Service interval in miles",
+      "example": 10000
+    }
+  }
+}

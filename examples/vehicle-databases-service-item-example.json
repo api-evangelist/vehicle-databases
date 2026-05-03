@@ -1,0 +1,11 @@
+{
+  "serviceId": "oil-change",
+  "name": "Engine Oil and Filter Change",
+  "category": "Engine",
+  "description": "Sample description for vehicle service.",
+  "fluidSpec": "0W-20 Full Synthetic",
+  "quantity": "5 quarts",
+  "laborHours": 0.5,
+  "oilFilterPartNumber": "04152-YZZA1",
+  "intervalMiles": 10000
+}

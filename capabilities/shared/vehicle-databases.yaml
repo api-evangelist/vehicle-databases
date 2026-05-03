@@ -1,0 +1,177 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Vehicle Databases Maintenance API"
+  description: >-
+    Vehicle Databases API providing OEM maintenance schedules, VIN decoding,
+    service items, NHTSA recalls, and technical service bulletins for vehicles
+    up to 200,000 miles.
+  tags:
+    - Automotive
+    - Fleet Management
+    - Maintenance
+    - Recalls
+    - Vehicles
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      VEHICLE_DATABASES_API_KEY: VEHICLE_DATABASES_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: vehicle-databases
+      baseUri: "https://api.vehicledatabases.com/v1"
+      description: "Vehicle Databases Maintenance API v1"
+      authentication:
+        type: apikey
+        key: X-API-Key
+        value: "{{env.VEHICLE_DATABASES_API_KEY}}"
+        placement: header
+      resources:
+        - name: vehicle-lookup
+          path: /vehicle
+          description: "Look up vehicles by make, model, and year"
+          operations:
+            - name: lookup-vehicle
+              method: GET
+              description: "Find vehicles matching make, model, and year with engine options"
+              inputParameters:
+                - name: make
+                  in: query
+                  type: string
+                  required: true
+                  description: "Vehicle make"
+                - name: model
+                  in: query
+                  type: string
+                  required: true
+                  description: "Vehicle model"
+                - name: year
+                  in: query
+                  type: integer
+                  required: true
+                  description: "4-digit model year"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: vin-decode
+          path: /vin/{vin}
+          description: "Decode a VIN to vehicle details"
+          operations:
+            - name: decode-vin
+              method: GET
+              description: "Decode a 17-character VIN to make, model, year, engine, and trim"
+              inputParameters:
+                - name: vin
+                  in: path
+                  type: string
+                  required: true
+                  description: "17-character Vehicle Identification Number"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: maintenance-schedule
+          path: /maintenance/{vehicleId}
+          description: "Get OEM maintenance schedule for a vehicle"
+          operations:
+            - name: get-maintenance-schedule
+              method: GET
+              description: "Return complete OEM maintenance schedule with all service intervals"
+              inputParameters:
+                - name: vehicleId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Vehicle identifier from lookup or VIN decode"
+                - name: mileage
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Current mileage to filter upcoming services"
+                - name: includeItems
+                  in: query
+                  type: boolean
+                  required: false
+                  description: "Include service items in response"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: service-items
+          path: /services/{vehicleId}
+          description: "Get service items for a vehicle at a specific mileage"
+          operations:
+            - name: list-service-items
+              method: GET
+              description: "Return service items with fluid specs and parts for a mileage interval"
+              inputParameters:
+                - name: vehicleId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Vehicle identifier"
+                - name: mileage
+                  in: query
+                  type: integer
+                  required: true
+                  description: "Service interval mileage"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: recalls
+          path: /recalls/{vehicleId}
+          description: "Get NHTSA recall data for a vehicle"
+          operations:
+            - name: get-recalls
+              method: GET
+              description: "Return NHTSA safety recalls with component, risk, and remedy information"
+              inputParameters:
+                - name: vehicleId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Vehicle identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: tsbs
+          path: /tsb/{vehicleId}
+          description: "Get technical service bulletins for a vehicle"
+          operations:
+            - name: get-tsbs
+              method: GET
+              description: "Return OEM TSBs with symptoms, diagnosis, and remedy procedures"
+              inputParameters:
+                - name: vehicleId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Vehicle identifier"
+                - name: category
+                  in: query
+                  type: string
+                  required: false
+                  description: "TSB category filter"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."

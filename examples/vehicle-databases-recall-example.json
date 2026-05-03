@@ -1,0 +1,9 @@
+{
+  "recallId": "22V-123",
+  "component": "Air Bags",
+  "summary": "Sample description for vehicle service.",
+  "recallDate": "2022-06-15",
+  "remedyDate": "2022-09-01",
+  "remedyDescription": "Sample description for vehicle service.",
+  "remedyStatus": "pending"
+}

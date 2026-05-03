@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vehicle-databases/refs/heads/main/json-schema/vehicle-databases-maintenance-schedule-schema.json",
+  "title": "MaintenanceSchedule",
+  "description": "Complete OEM maintenance schedule with all service intervals",
+  "type": "object",
+  "properties": {
+    "vehicleId": {
+      "type": "string",
+      "description": "Vehicle identifier",
+      "example": "toyota-camry-2022-25l-4cyl"
+    },
+    "make": {
+      "type": "string",
+      "example": "Toyota"
+    },
+    "model": {
+      "type": "string",
+      "example": "Camry"
+    },
+    "year": {
+      "type": "integer",
+      "example": 2022
+    },
+    "intervals": {
+      "type": "array",
+      "description": "All maintenance intervals up to 200,000 miles",
+      "items": {
+        "$ref": "#/components/schemas/MaintenanceInterval"
+      }
+    }
+  }
+}

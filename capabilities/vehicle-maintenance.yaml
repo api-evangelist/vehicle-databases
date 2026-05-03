@@ -1,0 +1,207 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Vehicle Maintenance Workflow"
+  description: >-
+    Customer workflow capability for vehicle maintenance management. Combines
+    VIN decoding, OEM maintenance schedule retrieval, service item lookup,
+    NHTSA recall checks, and TSB lookups into a unified interface for fleet
+    operators, repair shops, and consumer maintenance reminder applications.
+  tags:
+    - Automotive
+    - Fleet Management
+    - Maintenance
+    - Recalls
+    - Vehicles
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      VEHICLE_DATABASES_API_KEY: VEHICLE_DATABASES_API_KEY
+
+capability:
+  consumes:
+    - import: vehicle-databases
+      location: ./shared/vehicle-databases.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: vehicle-maintenance-api
+      description: "Unified REST API for vehicle maintenance management workflows."
+      resources:
+        - path: /v1/vehicles
+          name: vehicles
+          description: "Look up vehicles by make, model, and year"
+          operations:
+            - method: GET
+              name: lookup-vehicle
+              description: "Find vehicles with engine options by make, model, and year"
+              call: "vehicle-databases.lookup-vehicle"
+              with:
+                make: "rest.make"
+                model: "rest.model"
+                year: "rest.year"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/vehicles/vin/{vin}
+          name: vin-decode
+          description: "Decode a VIN to vehicle details"
+          operations:
+            - method: GET
+              name: decode-vin
+              description: "Decode a 17-character VIN to full vehicle specification"
+              call: "vehicle-databases.decode-vin"
+              with:
+                vin: "rest.vin"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/maintenance/{vehicleId}
+          name: maintenance
+          description: "Get OEM maintenance schedule"
+          operations:
+            - method: GET
+              name: get-maintenance-schedule
+              description: "Get complete OEM maintenance schedule with service intervals"
+              call: "vehicle-databases.get-maintenance-schedule"
+              with:
+                vehicleId: "rest.vehicleId"
+                mileage: "rest.mileage"
+                includeItems: "rest.includeItems"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/services/{vehicleId}
+          name: services
+          description: "Get service items for a maintenance interval"
+          operations:
+            - method: GET
+              name: list-service-items
+              description: "List service items with fluid specs for a specific mileage"
+              call: "vehicle-databases.list-service-items"
+              with:
+                vehicleId: "rest.vehicleId"
+                mileage: "rest.mileage"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/recalls/{vehicleId}
+          name: recalls
+          description: "Check NHTSA safety recalls"
+          operations:
+            - method: GET
+              name: get-recalls
+              description: "Get NHTSA recall information for a vehicle"
+              call: "vehicle-databases.get-recalls"
+              with:
+                vehicleId: "rest.vehicleId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/tsb/{vehicleId}
+          name: tsbs
+          description: "Get technical service bulletins"
+          operations:
+            - method: GET
+              name: get-tsbs
+              description: "Get OEM technical service bulletins for a vehicle"
+              call: "vehicle-databases.get-tsbs"
+              with:
+                vehicleId: "rest.vehicleId"
+                category: "rest.category"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: vehicle-maintenance-mcp
+      transport: http
+      description: "MCP server for AI-assisted vehicle maintenance management."
+      tools:
+        - name: lookup-vehicle
+          description: "Look up vehicles by make, model, and year to get vehicle identifiers"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "vehicle-databases.lookup-vehicle"
+          with:
+            make: "tools.make"
+            model: "tools.model"
+            year: "tools.year"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: decode-vin
+          description: "Decode a 17-character VIN to identify make, model, year, engine, and trim"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "vehicle-databases.decode-vin"
+          with:
+            vin: "tools.vin"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-maintenance-schedule
+          description: "Get the complete OEM maintenance schedule for a vehicle, optionally filtered by current mileage"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "vehicle-databases.get-maintenance-schedule"
+          with:
+            vehicleId: "tools.vehicleId"
+            mileage: "tools.mileage"
+            includeItems: "tools.includeItems"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-service-items
+          description: "Get service items, fluid specifications, and part numbers for a vehicle at a specific mileage interval"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "vehicle-databases.list-service-items"
+          with:
+            vehicleId: "tools.vehicleId"
+            mileage: "tools.mileage"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-recalls
+          description: "Check for NHTSA safety recalls affecting a specific vehicle"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "vehicle-databases.get-recalls"
+          with:
+            vehicleId: "tools.vehicleId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-tsbs
+          description: "Get OEM technical service bulletins (TSBs) for a vehicle, optionally filtered by category"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "vehicle-databases.get-tsbs"
+          with:
+            vehicleId: "tools.vehicleId"
+            category: "tools.category"
+          outputParameters:
+            - type: object
+              mapping: "$."

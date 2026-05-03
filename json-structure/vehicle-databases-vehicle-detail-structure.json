@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vehicle-databases/refs/heads/main/json-structure/vehicle-databases-vehicle-detail-structure.json",
+  "name": "VehicleDetail",
+  "description": "Detailed vehicle information from VIN or lookup",
+  "type": "object",
+  "properties": {
+    "vin": {
+      "type": "string",
+      "description": "17-character VIN",
+      "example": "4T1C11AK2NU123456"
+    },
+    "vehicleId": {
+      "type": "string",
+      "description": "Internal vehicle identifier for API requests",
+      "example": "toyota-camry-2022-25l-4cyl"
+    },
+    "make": {
+      "type": "string",
+      "description": "Vehicle make",
+      "example": "Toyota"
+    },
+    "model": {
+      "type": "string",
+      "description": "Vehicle model",
+      "example": "Camry"
+    },
+    "year": {
+      "type": "int32",
+      "description": "Model year",
+      "example": 2022
+    },
+    "engine": {
+      "type": "string",
+      "description": "Engine description",
+      "example": "2.5L 4-Cylinder"
+    },
+    "trim": {
+      "type": "string",
+      "description": "Trim level",
+      "example": "LE"
+    },
+    "bodyStyle": {
+      "type": "string",
+      "description": "Vehicle body style",
+      "example": "Sedan"
+    },
+    "fuelType": {
+      "type": "string",
+      "description": "Fuel type",
+      "example": "Gasoline"
+    },
+    "transmission": {
+      "type": "string",
+      "description": "Transmission type",
+      "example": "Automatic"
+    },
+    "driveType": {
+      "type": "string",
+      "description": "Drive type (FWD, RWD, AWD, 4WD)",
+      "example": "FWD"
+    },
+    "plantCountry": {
+      "type": "string",
+      "description": "Country of manufacture",
+      "example": "Japan"
+    }
+  }
+}

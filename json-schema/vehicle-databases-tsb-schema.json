@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vehicle-databases/refs/heads/main/json-schema/vehicle-databases-tsb-schema.json",
+  "title": "TSB",
+  "description": "Technical service bulletin from the OEM",
+  "type": "object",
+  "properties": {
+    "tsbId": {
+      "type": "string",
+      "description": "TSB identifier",
+      "example": "TC22-0043"
+    },
+    "title": {
+      "type": "string",
+      "description": "TSB title",
+      "example": "Engine Hesitation at Cold Start"
+    },
+    "category": {
+      "type": "string",
+      "description": "TSB category",
+      "example": "Engine"
+    },
+    "issueDate": {
+      "type": "string",
+      "format": "date",
+      "description": "TSB issue date",
+      "example": "2022-03-10"
+    },
+    "symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Observable symptoms"
+    },
+    "remedy": {
+      "type": "string",
+      "description": "Corrective action"
+    }
+  }
+}

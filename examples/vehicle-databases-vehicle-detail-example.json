@@ -1,0 +1,12 @@
+{
+  "vin": "4T1C11AK2NU123456",
+  "vehicleId": "toyota-camry-2022-25l-4cyl",
+  "make": "Toyota",
+  "model": "Camry",
+  "year": 2022,
+  "engine": "2.5L 4-Cylinder",
+  "trim": "LE",
+  "bodyStyle": "Sedan",
+  "fuelType": "Gasoline",
+  "transmission": "Automatic"
+}
