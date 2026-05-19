@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Vehicle Databases Maintenance API — Recalls
+  description: 'Vehicle Databases Maintenance API — Recalls. 1 operations. Lead operation: Vehicle Databases Get Recalls.
+    Self-contained Naftiko capability covering one Vehicle Databases business surface.'
+  tags:
+  - Vehicle Databases
+  - Recalls
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    VEHICLE_DATABASES_API_KEY: VEHICLE_DATABASES_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: vehicle-databases-recalls
+    baseUri: https://api.vehicledatabases.com/v1
+    description: Vehicle Databases Maintenance API — Recalls business capability. Self-contained, no shared references.
+    resources:
+    - name: recalls-vehicleId
+      path: /recalls/{vehicleId}
+      operations:
+      - name: getrecalls
+        method: GET
+        description: Vehicle Databases Get Recalls
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vehicleId
+          in: path
+          type: string
+          description: Vehicle identifier
+          required: true
+    authentication:
+      type: apikey
+      key: X-API-Key
+      value: '{{env.VEHICLE_DATABASES_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: vehicle-databases-recalls-rest
+    port: 8080
+    description: REST adapter for Vehicle Databases Maintenance API — Recalls. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/recalls/{vehicleid}
+      name: recalls-vehicleid
+      description: REST surface for recalls-vehicleId.
+      operations:
+      - method: GET
+        name: getrecalls
+        description: Vehicle Databases Get Recalls
+        call: vehicle-databases-recalls.getrecalls
+        with:
+          vehicleId: rest.vehicleId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: vehicle-databases-recalls-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Vehicle Databases Maintenance API — Recalls. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: vehicle-databases-get-recalls
+      description: Vehicle Databases Get Recalls
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: vehicle-databases-recalls.getrecalls
+      with:
+        vehicleId: tools.vehicleId
+      outputParameters:
+      - type: object
+        mapping: $.
