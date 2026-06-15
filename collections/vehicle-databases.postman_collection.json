@@ -1,0 +1,1140 @@
+{
+  "item": [
+    {
+      "id": "c77abf73-a8ed-48a1-9bca-01a6c3b10788",
+      "name": "Vehicles",
+      "description": {
+        "content": "Vehicle lookup and VIN decoding",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "199a41e3-d5fe-410e-aca7-d703d836d830",
+          "name": "Vehicle Databases Lookup Vehicle",
+          "request": {
+            "name": "Vehicle Databases Lookup Vehicle",
+            "description": {
+              "content": "Look up vehicle information by make, model, and year. Returns available engine options, trim levels, and vehicle identifiers for use in subsequent maintenance schedule and service lookups.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicle"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "make",
+                  "value": "<string>",
+                  "description": "(Required) Vehicle make (e.g. Toyota, Ford, Chevrolet)"
+                },
+                {
+                  "disabled": false,
+                  "key": "model",
+                  "value": "<string>",
+                  "description": "(Required) Vehicle model (e.g. Camry, F-150)"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<integer>",
+                  "description": "(Required) 4-digit model year"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3faa35c0-0923-4f88-9b09-73a951b5c707",
+              "name": "Vehicle information with engine options",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "make",
+                      "value": "Toyota"
+                    },
+                    {
+                      "key": "model",
+                      "value": "Camry"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicles\": [\n    {\n      \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n      \"make\": \"Toyota\",\n      \"model\": \"Camry\",\n      \"year\": 2022,\n      \"engine\": \"2.5L 4-Cylinder\",\n      \"trim\": \"LE\",\n      \"fuelType\": \"Gasoline\"\n    }\n  ],\n  \"count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e68a30e3-e3f3-4908-b3f1-2c57da4a6f79",
+              "name": "Missing required parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "make",
+                      "value": "Toyota"
+                    },
+                    {
+                      "key": "model",
+                      "value": "Camry"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fdb61111-e357-4896-be60-6d919bd0c5e4",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "make",
+                      "value": "Toyota"
+                    },
+                    {
+                      "key": "model",
+                      "value": "Camry"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "220d4817-2f37-405e-a52c-a2acf1c25d1b",
+          "name": "Vehicle Databases Decode VIN",
+          "request": {
+            "name": "Vehicle Databases Decode VIN",
+            "description": {
+              "content": "Decode a 17-character Vehicle Identification Number (VIN) to extract make, model, year, engine, body style, trim, transmission, drive type, and plant of manufacture.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vin",
+                ":vin"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) 17-character Vehicle Identification Number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1df0cb0-5829-460b-8aba-578694288a76",
+              "name": "Decoded VIN data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vin",
+                    ":vin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) 17-character Vehicle Identification Number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vin\": \"4T1C11AK2NU123456\",\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2022,\n  \"engine\": \"2.5L 4-Cylinder\",\n  \"trim\": \"LE\",\n  \"bodyStyle\": \"Sedan\",\n  \"fuelType\": \"Gasoline\",\n  \"transmission\": \"Automatic\",\n  \"driveType\": \"FWD\",\n  \"plantCountry\": \"Japan\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bf31a39-a90d-4ec3-956f-fe6a81693115",
+              "name": "Invalid VIN format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vin",
+                    ":vin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) 17-character Vehicle Identification Number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "11cba610-5736-496d-b270-e3fff38c33bc",
+              "name": "VIN not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vin",
+                    ":vin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) 17-character Vehicle Identification Number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1baf799a-4ede-43bb-904e-4545144758f6",
+      "name": "Maintenance",
+      "description": {
+        "content": "OEM maintenance schedules and service intervals",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5ced7156-8bce-469d-9486-82e0f0920f2a",
+          "name": "Vehicle Databases Get Maintenance Schedule",
+          "request": {
+            "name": "Vehicle Databases Get Maintenance Schedule",
+            "description": {
+              "content": "Returns the complete OEM-compliant maintenance schedule for a vehicle, including all service intervals from 5,000 to 200,000 miles with service items, fluids, and estimated costs for each interval.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "maintenance",
+                ":vehicleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mileage",
+                  "value": "<integer>",
+                  "description": "Current vehicle mileage to filter upcoming services"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeItems",
+                  "value": "true",
+                  "description": "Include detailed service items in response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vehicleId",
+                  "description": "(Required) Vehicle identifier from lookup or VIN decode"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1240a81a-83d9-42ed-b6be-904a100f8680",
+              "name": "Complete maintenance schedule with service intervals",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maintenance",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mileage",
+                      "value": "45000"
+                    },
+                    {
+                      "key": "includeItems",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier from lookup or VIN decode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2022,\n  \"intervals\": [\n    {\n      \"mileage\": 50000,\n      \"months\": 48,\n      \"label\": \"50,000 Mile Service\",\n      \"services\": [\n        {\n          \"serviceId\": \"oil-change\",\n          \"name\": \"Engine Oil and Filter Change\",\n          \"category\": \"Engine\",\n          \"fluidSpec\": \"0W-20 Full Synthetic\",\n          \"intervalMiles\": 10000,\n          \"laborHours\": 0.5\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "082b235a-5989-4955-9ba1-ddc58cb65bdc",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maintenance",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mileage",
+                      "value": "45000"
+                    },
+                    {
+                      "key": "includeItems",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier from lookup or VIN decode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "992ac54f-6488-4a97-842a-9ad31f550985",
+      "name": "Services",
+      "description": {
+        "content": "Service items, fluids, and parts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "68d5d9cd-2f45-47db-823e-e785eb77b582",
+          "name": "Vehicle Databases List Service Items",
+          "request": {
+            "name": "Vehicle Databases List Service Items",
+            "description": {
+              "content": "Returns all service items for a vehicle at a specific mileage interval, including fluid specifications, part numbers, labor time estimates, and OEM-required procedures.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "services",
+                ":vehicleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mileage",
+                  "value": "<integer>",
+                  "description": "(Required) Service interval mileage"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vehicleId",
+                  "description": "(Required) Vehicle identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f33de14e-7114-4bb8-876d-b708d0c1eaae",
+              "name": "Service items for the mileage interval",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "services",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mileage",
+                      "value": "50000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"mileage\": 50000,\n  \"items\": [\n    {\n      \"serviceId\": \"oil-change\",\n      \"name\": \"Engine Oil and Filter Change\",\n      \"category\": \"Engine\",\n      \"description\": \"Change engine oil and oil filter\",\n      \"fluidSpec\": \"0W-20 Full Synthetic\",\n      \"quantity\": \"5 quarts\",\n      \"laborHours\": 0.5,\n      \"oilFilterPartNumber\": \"04152-YZZA1\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16050e99-7905-481c-9321-87949d4f2918",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "services",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mileage",
+                      "value": "50000"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b98ba4ab-c82b-4ff2-bd4c-c72a04f7e6e8",
+      "name": "Recalls",
+      "description": {
+        "content": "NHTSA safety recall data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "469eb4ba-232b-4f23-9928-492a63ed029e",
+          "name": "Vehicle Databases Get Recalls",
+          "request": {
+            "name": "Vehicle Databases Get Recalls",
+            "description": {
+              "content": "Returns NHTSA safety recall information for a specific vehicle including recall dates, components affected, risk descriptions, and remedy status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recalls",
+                ":vehicleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vehicleId",
+                  "description": "(Required) Vehicle identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9e18559-8357-4d62-b418-349b4564b8c3",
+              "name": "NHTSA recall data for the vehicle",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recalls",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"recalls\": [\n    {\n      \"recallId\": \"22V-123\",\n      \"component\": \"Air Bags\",\n      \"summary\": \"The inflator rupture may result in metal fragments striking occupants\",\n      \"recallDate\": \"2022-06-15\",\n      \"remedyDate\": \"2022-09-01\",\n      \"remedyDescription\": \"Dealers will replace the airbag inflator free of charge\",\n      \"remedyStatus\": \"complete\"\n    }\n  ],\n  \"count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cf3470d-232a-42bf-9343-bfda5bb82dbc",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recalls",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "86afc4aa-cba0-4d92-ab25-e109f4325c79",
+      "name": "TSBs",
+      "description": {
+        "content": "Technical service bulletins",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "28d1829d-4070-46b0-8d70-383c17ae7d39",
+          "name": "Vehicle Databases Get TSBs",
+          "request": {
+            "name": "Vehicle Databases Get TSBs",
+            "description": {
+              "content": "Returns technical service bulletins (TSBs) issued by the OEM for a specific vehicle, including symptoms, diagnosis procedures, and corrective actions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tsb",
+                ":vehicleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "TSB category filter (e.g. Engine, Electrical, HVAC)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vehicleId",
+                  "description": "(Required) Vehicle identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f6a71f0e-59f1-4bef-926b-b344bc449f3c",
+              "name": "Technical service bulletins for the vehicle",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tsb",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"tsbs\": [\n    {\n      \"tsbId\": \"TC22-0043\",\n      \"title\": \"Engine Hesitation at Cold Start\",\n      \"category\": \"Engine\",\n      \"issueDate\": \"2022-03-10\",\n      \"symptoms\": [\n        \"Engine hesitation or rough idle during cold start\",\n        \"Check Engine light with code P0300\"\n      ],\n      \"remedy\": \"Update PCM software to version 2.3.1\"\n    }\n  ],\n  \"count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42b9b301-d11b-4daa-b505-fbf421299446",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tsb",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.vehicledatabases.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b5907d5d-af2e-4f4a-afe8-1fc0477ec98c",
+    "name": "Vehicle Databases Maintenance API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.\n\nContact Support:\n Name: Vehicle Databases Support",
+      "type": "text/plain"
+    }
+  }
+}
