@@ -55,10 +55,10 @@ apis:
       - type: JSONStructure
         url: json-structure/vehicle-databases-service-item-structure.json
         title: Service Item Structure
-      - type: Example
+      - type: Examples
         url: examples/vehicle-databases-maintenance-schedule-example.json
         title: Maintenance Schedule Example
-      - type: Example
+      - type: Examples
         url: examples/vehicle-databases-vehicle-example.json
         title: Vehicle Example
 common:
