@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/vehicle-databases-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKey
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: Vehicle Databases API key
+  sources:
+  - openapi/vehicle-databases-openapi.yml

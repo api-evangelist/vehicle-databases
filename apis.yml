@@ -62,6 +62,10 @@ apis:
         url: examples/vehicle-databases-vehicle-example.json
         title: Vehicle Example
 common:
+  - type: DomainSecurity
+    url: security/vehicle-databases-domain-security.yml
+  - type: Authentication
+    url: authentication/vehicle-databases-authentication.yml
   - type: Website
     url: https://vehicledatabases.com/
   - type: Portal
@@ -72,6 +76,8 @@ common:
     url: https://vehicledatabases.com/pricing
   - type: SpectralRules
     url: rules/vehicle-databases-spectral-rules.yml
+  - url: https://vehicledatabases.com/feed/
+    type: Blog
     title: Vehicle Databases Spectral Rules
   - type: Vocabulary
     url: vocabulary/vehicle-databases-vocabulary.yml
