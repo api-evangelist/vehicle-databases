@@ -62,6 +62,8 @@ apis:
         url: examples/vehicle-databases-vehicle-example.json
         title: Vehicle Example
 common:
+  - type: AgenticAccess
+    url: agentic-access/vehicle-databases-agentic-access.yml
   - type: DomainSecurity
     url: security/vehicle-databases-domain-security.yml
   - type: Authentication
