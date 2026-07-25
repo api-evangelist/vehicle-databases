@@ -1,0 +1,118 @@
+openapi: 3.1.0
+info:
+  title: Vehicle Databases Maintenance TSBs API
+  description: Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.
+  version: '1.0'
+  contact:
+    name: Vehicle Databases Support
+    url: https://vehicledatabases.com/contact
+  license:
+    name: Vehicle Databases Terms of Service
+    url: https://vehicledatabases.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.vehicledatabases.com/v1
+  description: Vehicle Databases API
+security:
+- ApiKey: []
+tags:
+- name: TSBs
+  description: Technical service bulletins
+paths:
+  /tsb/{vehicleId}:
+    get:
+      operationId: getTSBs
+      summary: Vehicle Databases Get TSBs
+      description: Returns technical service bulletins (TSBs) issued by the OEM for a specific vehicle, including symptoms, diagnosis procedures, and corrective actions.
+      tags:
+      - TSBs
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        description: Vehicle identifier
+        schema:
+          type: string
+        example: toyota-camry-2022-25l-4cyl
+      - name: category
+        in: query
+        description: TSB category filter (e.g. Engine, Electrical, HVAC)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Technical service bulletins for the vehicle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TSBListResponse'
+              examples:
+                GetTSBs200Example:
+                  summary: Default getTSBs 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: toyota-camry-2022-25l-4cyl
+                    tsbs:
+                    - tsbId: TC22-0043
+                      title: Engine Hesitation at Cold Start
+                      category: Engine
+                      issueDate: '2022-03-10'
+                      symptoms:
+                      - Engine hesitation or rough idle during cold start
+                      - Check Engine light with code P0300
+                      remedy: Update PCM software to version 2.3.1
+                    count: 1
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    TSB:
+      type: object
+      description: Technical service bulletin from the OEM
+      properties:
+        tsbId:
+          type: string
+          description: TSB identifier
+          example: TC22-0043
+        title:
+          type: string
+          description: TSB title
+          example: Engine Hesitation at Cold Start
+        category:
+          type: string
+          description: TSB category
+          example: Engine
+        issueDate:
+          type: string
+          format: date
+          description: TSB issue date
+          example: '2022-03-10'
+        symptoms:
+          type: array
+          items:
+            type: string
+          description: Observable symptoms
+        remedy:
+          type: string
+          description: Corrective action
+    TSBListResponse:
+      type: object
+      description: Technical service bulletins for a vehicle
+      properties:
+        vehicleId:
+          type: string
+        tsbs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TSB'
+        count:
+          type: integer
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Vehicle Databases API key

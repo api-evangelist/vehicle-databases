@@ -1,0 +1,197 @@
+openapi: 3.1.0
+info:
+  title: Vehicle Databases Maintenance Vehicles API
+  description: Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.
+  version: '1.0'
+  contact:
+    name: Vehicle Databases Support
+    url: https://vehicledatabases.com/contact
+  license:
+    name: Vehicle Databases Terms of Service
+    url: https://vehicledatabases.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.vehicledatabases.com/v1
+  description: Vehicle Databases API
+security:
+- ApiKey: []
+tags:
+- name: Vehicles
+  description: Vehicle lookup and VIN decoding
+paths:
+  /vehicle:
+    get:
+      operationId: lookupVehicle
+      summary: Vehicle Databases Lookup Vehicle
+      description: Look up vehicle information by make, model, and year. Returns available engine options, trim levels, and vehicle identifiers for use in subsequent maintenance schedule and service lookups.
+      tags:
+      - Vehicles
+      parameters:
+      - name: make
+        in: query
+        required: true
+        description: Vehicle make (e.g. Toyota, Ford, Chevrolet)
+        schema:
+          type: string
+        example: Toyota
+      - name: model
+        in: query
+        required: true
+        description: Vehicle model (e.g. Camry, F-150)
+        schema:
+          type: string
+        example: Camry
+      - name: year
+        in: query
+        required: true
+        description: 4-digit model year
+        schema:
+          type: integer
+          minimum: 1980
+          maximum: 2026
+        example: 2022
+      responses:
+        '200':
+          description: Vehicle information with engine options
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleListResponse'
+              examples:
+                LookupVehicle200Example:
+                  summary: Default lookupVehicle 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicles:
+                    - vehicleId: toyota-camry-2022-25l-4cyl
+                      make: Toyota
+                      model: Camry
+                      year: 2022
+                      engine: 2.5L 4-Cylinder
+                      trim: LE
+                      fuelType: Gasoline
+                    count: 1
+        '400':
+          description: Missing required parameters
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /vin/{vin}:
+    get:
+      operationId: decodeVin
+      summary: Vehicle Databases Decode VIN
+      description: Decode a 17-character Vehicle Identification Number (VIN) to extract make, model, year, engine, body style, trim, transmission, drive type, and plant of manufacture.
+      tags:
+      - Vehicles
+      parameters:
+      - name: vin
+        in: path
+        required: true
+        description: 17-character Vehicle Identification Number
+        schema:
+          type: string
+          pattern: ^[A-HJ-NPR-Z0-9]{17}$
+        example: 4T1C11AK2NU123456
+      responses:
+        '200':
+          description: Decoded VIN data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDetail'
+              examples:
+                DecodeVin200Example:
+                  summary: Default decodeVin 200 response
+                  x-microcks-default: true
+                  value:
+                    vin: 4T1C11AK2NU123456
+                    vehicleId: toyota-camry-2022-25l-4cyl
+                    make: Toyota
+                    model: Camry
+                    year: 2022
+                    engine: 2.5L 4-Cylinder
+                    trim: LE
+                    bodyStyle: Sedan
+                    fuelType: Gasoline
+                    transmission: Automatic
+                    driveType: FWD
+                    plantCountry: Japan
+        '400':
+          description: Invalid VIN format
+        '404':
+          description: VIN not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    VehicleListResponse:
+      type: object
+      description: List of vehicles matching make/model/year lookup
+      properties:
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleDetail'
+        count:
+          type: integer
+    VehicleDetail:
+      type: object
+      description: Detailed vehicle information from VIN or lookup
+      properties:
+        vin:
+          type: string
+          description: 17-character VIN
+          example: 4T1C11AK2NU123456
+        vehicleId:
+          type: string
+          description: Internal vehicle identifier for API requests
+          example: toyota-camry-2022-25l-4cyl
+        make:
+          type: string
+          description: Vehicle make
+          example: Toyota
+        model:
+          type: string
+          description: Vehicle model
+          example: Camry
+        year:
+          type: integer
+          description: Model year
+          example: 2022
+        engine:
+          type: string
+          description: Engine description
+          example: 2.5L 4-Cylinder
+        trim:
+          type: string
+          description: Trim level
+          example: LE
+        bodyStyle:
+          type: string
+          description: Vehicle body style
+          example: Sedan
+        fuelType:
+          type: string
+          description: Fuel type
+          example: Gasoline
+        transmission:
+          type: string
+          description: Transmission type
+          example: Automatic
+        driveType:
+          type: string
+          description: Drive type (FWD, RWD, AWD, 4WD)
+          example: FWD
+        plantCountry:
+          type: string
+          description: Country of manufacture
+          example: Japan
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Vehicle Databases API key

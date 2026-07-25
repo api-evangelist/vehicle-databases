@@ -1,0 +1,182 @@
+openapi: 3.1.0
+info:
+  title: Vehicle Databases Maintenance API
+  description: Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.
+  version: '1.0'
+  contact:
+    name: Vehicle Databases Support
+    url: https://vehicledatabases.com/contact
+  license:
+    name: Vehicle Databases Terms of Service
+    url: https://vehicledatabases.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.vehicledatabases.com/v1
+  description: Vehicle Databases API
+security:
+- ApiKey: []
+tags:
+- name: Maintenance
+  description: OEM maintenance schedules and service intervals
+paths:
+  /maintenance/{vehicleId}:
+    get:
+      operationId: getMaintenanceSchedule
+      summary: Vehicle Databases Get Maintenance Schedule
+      description: Returns the complete OEM-compliant maintenance schedule for a vehicle, including all service intervals from 5,000 to 200,000 miles with service items, fluids, and estimated costs for each interval.
+      tags:
+      - Maintenance
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        description: Vehicle identifier from lookup or VIN decode
+        schema:
+          type: string
+        example: toyota-camry-2022-25l-4cyl
+      - name: mileage
+        in: query
+        description: Current vehicle mileage to filter upcoming services
+        schema:
+          type: integer
+          minimum: 0
+        example: 45000
+      - name: includeItems
+        in: query
+        description: Include detailed service items in response
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          description: Complete maintenance schedule with service intervals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceSchedule'
+              examples:
+                GetMaintenanceSchedule200Example:
+                  summary: Default getMaintenanceSchedule 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: toyota-camry-2022-25l-4cyl
+                    make: Toyota
+                    model: Camry
+                    year: 2022
+                    intervals:
+                    - mileage: 50000
+                      months: 48
+                      label: 50,000 Mile Service
+                      services:
+                      - serviceId: oil-change
+                        name: Engine Oil and Filter Change
+                        category: Engine
+                        fluidSpec: 0W-20 Full Synthetic
+                        intervalMiles: 10000
+                        laborHours: 0.5
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ServiceItem:
+      type: object
+      description: Individual service item within a maintenance interval
+      properties:
+        serviceId:
+          type: string
+          description: Service identifier
+          example: oil-change
+        name:
+          type: string
+          description: Service name
+          example: Engine Oil and Filter Change
+        category:
+          type: string
+          description: Service category
+          enum:
+          - Engine
+          - Transmission
+          - Brakes
+          - Tires
+          - Electrical
+          - HVAC
+          - Fuel
+          - Cooling
+          - Suspension
+          - Body
+          example: Engine
+        description:
+          type: string
+          description: Service procedure description
+        fluidSpec:
+          type: string
+          description: Required fluid specification
+          example: 0W-20 Full Synthetic
+        quantity:
+          type: string
+          description: Fluid or part quantity required
+          example: 5 quarts
+        laborHours:
+          type: number
+          description: Estimated labor time in hours
+          example: 0.5
+        oilFilterPartNumber:
+          type: string
+          description: OEM part number
+          example: 04152-YZZA1
+        intervalMiles:
+          type: integer
+          description: Service interval in miles
+          example: 10000
+    MaintenanceInterval:
+      type: object
+      description: A single mileage/time-based maintenance interval
+      properties:
+        mileage:
+          type: integer
+          description: Service mileage interval
+          example: 50000
+        months:
+          type: integer
+          description: Time-based interval in months
+          example: 48
+        label:
+          type: string
+          description: Human-readable interval label
+          example: 50,000 Mile Service
+        services:
+          type: array
+          description: Service items required at this interval
+          items:
+            $ref: '#/components/schemas/ServiceItem'
+    MaintenanceSchedule:
+      type: object
+      description: Complete OEM maintenance schedule with all service intervals
+      properties:
+        vehicleId:
+          type: string
+          description: Vehicle identifier
+          example: toyota-camry-2022-25l-4cyl
+        make:
+          type: string
+          example: Toyota
+        model:
+          type: string
+          example: Camry
+        year:
+          type: integer
+          example: 2022
+        intervals:
+          type: array
+          description: All maintenance intervals up to 200,000 miles
+          items:
+            $ref: '#/components/schemas/MaintenanceInterval'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Vehicle Databases API key

@@ -1,0 +1,141 @@
+openapi: 3.1.0
+info:
+  title: Vehicle Databases Maintenance Services API
+  description: Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.
+  version: '1.0'
+  contact:
+    name: Vehicle Databases Support
+    url: https://vehicledatabases.com/contact
+  license:
+    name: Vehicle Databases Terms of Service
+    url: https://vehicledatabases.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.vehicledatabases.com/v1
+  description: Vehicle Databases API
+security:
+- ApiKey: []
+tags:
+- name: Services
+  description: Service items, fluids, and parts
+paths:
+  /services/{vehicleId}:
+    get:
+      operationId: listServiceItems
+      summary: Vehicle Databases List Service Items
+      description: Returns all service items for a vehicle at a specific mileage interval, including fluid specifications, part numbers, labor time estimates, and OEM-required procedures.
+      tags:
+      - Services
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        description: Vehicle identifier
+        schema:
+          type: string
+        example: toyota-camry-2022-25l-4cyl
+      - name: mileage
+        in: query
+        required: true
+        description: Service interval mileage
+        schema:
+          type: integer
+        example: 50000
+      responses:
+        '200':
+          description: Service items for the mileage interval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceItemListResponse'
+              examples:
+                ListServiceItems200Example:
+                  summary: Default listServiceItems 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: toyota-camry-2022-25l-4cyl
+                    mileage: 50000
+                    items:
+                    - serviceId: oil-change
+                      name: Engine Oil and Filter Change
+                      category: Engine
+                      description: Change engine oil and oil filter
+                      fluidSpec: 0W-20 Full Synthetic
+                      quantity: 5 quarts
+                      laborHours: 0.5
+                      oilFilterPartNumber: 04152-YZZA1
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ServiceItem:
+      type: object
+      description: Individual service item within a maintenance interval
+      properties:
+        serviceId:
+          type: string
+          description: Service identifier
+          example: oil-change
+        name:
+          type: string
+          description: Service name
+          example: Engine Oil and Filter Change
+        category:
+          type: string
+          description: Service category
+          enum:
+          - Engine
+          - Transmission
+          - Brakes
+          - Tires
+          - Electrical
+          - HVAC
+          - Fuel
+          - Cooling
+          - Suspension
+          - Body
+          example: Engine
+        description:
+          type: string
+          description: Service procedure description
+        fluidSpec:
+          type: string
+          description: Required fluid specification
+          example: 0W-20 Full Synthetic
+        quantity:
+          type: string
+          description: Fluid or part quantity required
+          example: 5 quarts
+        laborHours:
+          type: number
+          description: Estimated labor time in hours
+          example: 0.5
+        oilFilterPartNumber:
+          type: string
+          description: OEM part number
+          example: 04152-YZZA1
+        intervalMiles:
+          type: integer
+          description: Service interval in miles
+          example: 10000
+    ServiceItemListResponse:
+      type: object
+      description: Service items for a vehicle at a specific mileage
+      properties:
+        vehicleId:
+          type: string
+        mileage:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItem'
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Vehicle Databases API key

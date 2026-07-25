@@ -1,0 +1,118 @@
+openapi: 3.1.0
+info:
+  title: Vehicle Databases Maintenance Recalls API
+  description: Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.
+  version: '1.0'
+  contact:
+    name: Vehicle Databases Support
+    url: https://vehicledatabases.com/contact
+  license:
+    name: Vehicle Databases Terms of Service
+    url: https://vehicledatabases.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.vehicledatabases.com/v1
+  description: Vehicle Databases API
+security:
+- ApiKey: []
+tags:
+- name: Recalls
+  description: NHTSA safety recall data
+paths:
+  /recalls/{vehicleId}:
+    get:
+      operationId: getRecalls
+      summary: Vehicle Databases Get Recalls
+      description: Returns NHTSA safety recall information for a specific vehicle including recall dates, components affected, risk descriptions, and remedy status.
+      tags:
+      - Recalls
+      parameters:
+      - name: vehicleId
+        in: path
+        required: true
+        description: Vehicle identifier
+        schema:
+          type: string
+        example: toyota-camry-2022-25l-4cyl
+      responses:
+        '200':
+          description: NHTSA recall data for the vehicle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecallListResponse'
+              examples:
+                GetRecalls200Example:
+                  summary: Default getRecalls 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: toyota-camry-2022-25l-4cyl
+                    recalls:
+                    - recallId: 22V-123
+                      component: Air Bags
+                      summary: The inflator rupture may result in metal fragments striking occupants
+                      recallDate: '2022-06-15'
+                      remedyDate: '2022-09-01'
+                      remedyDescription: Dealers will replace the airbag inflator free of charge
+                      remedyStatus: complete
+                    count: 1
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    RecallListResponse:
+      type: object
+      description: NHTSA recalls for a vehicle
+      properties:
+        vehicleId:
+          type: string
+        recalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recall'
+        count:
+          type: integer
+    Recall:
+      type: object
+      description: NHTSA safety recall for a vehicle
+      properties:
+        recallId:
+          type: string
+          description: NHTSA recall identifier
+          example: 22V-123
+        component:
+          type: string
+          description: Vehicle component affected
+          example: Air Bags
+        summary:
+          type: string
+          description: Recall risk summary
+        recallDate:
+          type: string
+          format: date
+          description: Recall initiation date
+          example: '2022-06-15'
+        remedyDate:
+          type: string
+          format: date
+          description: Remedy available date
+          example: '2022-09-01'
+        remedyDescription:
+          type: string
+          description: Description of the remedy
+        remedyStatus:
+          type: string
+          enum:
+          - pending
+          - available
+          - complete
+          description: Recall remedy status
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Vehicle Databases API key
