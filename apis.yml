@@ -5,9 +5,22 @@ description: >-
   to 200,000 miles. Delivers maintenance intervals, service items, fluids, and recall data for automotive service
   platforms, fleet management systems, and consumer maintenance reminder applications.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vehicle-databases.png
 tags:
   - Automotive
   - Fleet Management
@@ -19,48 +32,141 @@ specificationVersion: '0.19'
 created: '2025-02-12'
 modified: '2026-05-19'
 apis:
-  - aid: vehicle-databases:vehicle-databases
-    name: Vehicle Databases Maintenance API
-    description: >-
-      The Vehicle Databases Maintenance API delivers OEM-compliant maintenance schedules for vehicles up to 200,000
-      miles. Provides service intervals by mileage and time, service item descriptions, fluid specifications, part
-      numbers, labor time estimates, recall notices, technical service bulletins, and vehicle decoder (VIN) information
-      for fleet operators, repair shops, and consumer-facing automotive applications.
-    humanURL: https://vehicledatabases.com/vehicle-maintenance-api
-    tags:
-      - Automotive
-      - Fleet Management
-      - Maintenance
-      - Recalls
-      - Vehicles
-    properties:
-      - type: Documentation
-        url: https://vehicledatabases.com/vehicle-maintenance-api
-      - type: Portal
-        url: https://vehicledatabases.com/
-      - type: OpenAPI
-        url: openapi/vehicle-databases-openapi.yml
-      - type: JSONSchema
-        url: json-schema/vehicle-databases-maintenance-schedule-schema.json
-        title: Maintenance Schedule Schema
-      - type: JSONSchema
-        url: json-schema/vehicle-databases-service-item-schema.json
-        title: Service Item Schema
-      - type: JSONSchema
-        url: json-schema/vehicle-databases-vehicle-schema.json
-        title: Vehicle Schema
-      - type: JSONStructure
-        url: json-structure/vehicle-databases-maintenance-schedule-structure.json
-        title: Maintenance Schedule Structure
-      - type: JSONStructure
-        url: json-structure/vehicle-databases-service-item-structure.json
-        title: Service Item Structure
-      - type: Examples
-        url: examples/vehicle-databases-maintenance-schedule-example.json
-        title: Maintenance Schedule Example
-      - type: Examples
-        url: examples/vehicle-databases-vehicle-example.json
-        title: Vehicle Example
+- aid: vehicle-databases:vehicle-databases-maintenance-api
+  name: Vehicle Databases Maintenance API
+  description: OEM maintenance schedules and service intervals
+  humanURL: https://vehicledatabases.com/vehicle-maintenance-api
+  tags:
+  - Maintenance
+  properties:
+  - type: OpenAPI
+    url: openapi/vehicle-databases-maintenance-api-openapi.yml
+  - type: Documentation
+    url: https://vehicledatabases.com/vehicle-maintenance-api
+  - type: Portal
+    url: https://vehicledatabases.com/
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-maintenance-schedule-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-service-item-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-vehicle-schema.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-maintenance-schedule-structure.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-service-item-structure.json
+  - type: Examples
+    url: examples/vehicle-databases-maintenance-schedule-example.json
+  - type: Examples
+    url: examples/vehicle-databases-vehicle-example.json
+- aid: vehicle-databases:vehicle-databases-recalls-api
+  name: Vehicle Databases Recalls API
+  description: NHTSA safety recall data
+  humanURL: https://vehicledatabases.com/vehicle-maintenance-api
+  tags:
+  - Recalls
+  properties:
+  - type: OpenAPI
+    url: openapi/vehicle-databases-recalls-api-openapi.yml
+  - type: Documentation
+    url: https://vehicledatabases.com/vehicle-maintenance-api
+  - type: Portal
+    url: https://vehicledatabases.com/
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-maintenance-schedule-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-service-item-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-vehicle-schema.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-maintenance-schedule-structure.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-service-item-structure.json
+  - type: Examples
+    url: examples/vehicle-databases-maintenance-schedule-example.json
+  - type: Examples
+    url: examples/vehicle-databases-vehicle-example.json
+- aid: vehicle-databases:vehicle-databases-services-api
+  name: Vehicle Databases Services API
+  description: Service items, fluids, and parts
+  humanURL: https://vehicledatabases.com/vehicle-maintenance-api
+  tags:
+  - Services
+  properties:
+  - type: OpenAPI
+    url: openapi/vehicle-databases-services-api-openapi.yml
+  - type: Documentation
+    url: https://vehicledatabases.com/vehicle-maintenance-api
+  - type: Portal
+    url: https://vehicledatabases.com/
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-maintenance-schedule-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-service-item-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-vehicle-schema.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-maintenance-schedule-structure.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-service-item-structure.json
+  - type: Examples
+    url: examples/vehicle-databases-maintenance-schedule-example.json
+  - type: Examples
+    url: examples/vehicle-databases-vehicle-example.json
+- aid: vehicle-databases:vehicle-databases-tsbs-api
+  name: Vehicle Databases TSBs API
+  description: Technical service bulletins
+  humanURL: https://vehicledatabases.com/vehicle-maintenance-api
+  tags:
+  - TSBs
+  properties:
+  - type: OpenAPI
+    url: openapi/vehicle-databases-tsbs-api-openapi.yml
+  - type: Documentation
+    url: https://vehicledatabases.com/vehicle-maintenance-api
+  - type: Portal
+    url: https://vehicledatabases.com/
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-maintenance-schedule-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-service-item-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-vehicle-schema.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-maintenance-schedule-structure.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-service-item-structure.json
+  - type: Examples
+    url: examples/vehicle-databases-maintenance-schedule-example.json
+  - type: Examples
+    url: examples/vehicle-databases-vehicle-example.json
+- aid: vehicle-databases:vehicle-databases-vehicles-api
+  name: Vehicle Databases Vehicles API
+  description: Vehicle lookup and VIN decoding
+  humanURL: https://vehicledatabases.com/vehicle-maintenance-api
+  tags:
+  - Vehicles
+  properties:
+  - type: OpenAPI
+    url: openapi/vehicle-databases-vehicles-api-openapi.yml
+  - type: Documentation
+    url: https://vehicledatabases.com/vehicle-maintenance-api
+  - type: Portal
+    url: https://vehicledatabases.com/
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-maintenance-schedule-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-service-item-schema.json
+  - type: JSONSchema
+    url: json-schema/vehicle-databases-vehicle-schema.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-maintenance-schedule-structure.json
+  - type: JSONStructure
+    url: json-structure/vehicle-databases-service-item-structure.json
+  - type: Examples
+    url: examples/vehicle-databases-maintenance-schedule-example.json
+  - type: Examples
+    url: examples/vehicle-databases-vehicle-example.json
 common:
   - type: AgenticAccess
     url: agentic-access/vehicle-databases-agentic-access.yml
