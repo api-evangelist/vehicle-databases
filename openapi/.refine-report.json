@@ -1,0 +1,22 @@
+{
+  "provider": "vehicle-databases",
+  "sources": [
+    "vehicle-databases-maintenance-api-openapi.yml",
+    "vehicle-databases-recalls-api-openapi.yml",
+    "vehicle-databases-services-api-openapi.yml",
+    "vehicle-databases-tsbs-api-openapi.yml",
+    "vehicle-databases-vehicles-api-openapi.yml"
+  ],
+  "outputs": [
+    "vehicle-databases-maintenance-api-openapi.yml",
+    "vehicle-databases-recalls-api-openapi.yml",
+    "vehicle-databases-services-api-openapi.yml",
+    "vehicle-databases-tsbs-api-openapi.yml",
+    "vehicle-databases-vehicles-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

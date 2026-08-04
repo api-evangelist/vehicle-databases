@@ -1,0 +1,626 @@
+openapi: 3.1.0
+info:
+  title: Vehicle Databases Maintenance API
+  description: >-
+    Vehicle Databases provides OEM-compliant vehicle maintenance schedules,
+    service items, fluid specifications, VIN decoding, NHTSA recall data,
+    and technical service bulletins (TSBs) for vehicles up to 200,000 miles.
+    Used by fleet operators, repair shops, and consumer automotive applications.
+  version: "1.0"
+  contact:
+    name: Vehicle Databases Support
+    url: https://vehicledatabases.com/contact
+  license:
+    name: Vehicle Databases Terms of Service
+    url: https://vehicledatabases.com/terms
+  x-generated-from: documentation
+
+servers:
+  - url: https://api.vehicledatabases.com/v1
+    description: Vehicle Databases API
+
+security:
+  - ApiKey: []
+
+tags:
+  - name: Vehicles
+    description: Vehicle lookup and VIN decoding
+  - name: Maintenance
+    description: OEM maintenance schedules and service intervals
+  - name: Services
+    description: Service items, fluids, and parts
+  - name: Recalls
+    description: NHTSA safety recall data
+  - name: TSBs
+    description: Technical service bulletins
+
+paths:
+  /vehicle:
+    get:
+      operationId: lookupVehicle
+      summary: Vehicle Databases Lookup Vehicle
+      description: >-
+        Look up vehicle information by make, model, and year. Returns available
+        engine options, trim levels, and vehicle identifiers for use in
+        subsequent maintenance schedule and service lookups.
+      tags:
+        - Vehicles
+      parameters:
+        - name: make
+          in: query
+          required: true
+          description: "Vehicle make (e.g. Toyota, Ford, Chevrolet)"
+          schema:
+            type: string
+          example: Toyota
+        - name: model
+          in: query
+          required: true
+          description: "Vehicle model (e.g. Camry, F-150)"
+          schema:
+            type: string
+          example: Camry
+        - name: year
+          in: query
+          required: true
+          description: "4-digit model year"
+          schema:
+            type: integer
+            minimum: 1980
+            maximum: 2026
+          example: 2022
+      responses:
+        '200':
+          description: Vehicle information with engine options
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleListResponse'
+              examples:
+                LookupVehicle200Example:
+                  summary: Default lookupVehicle 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicles:
+                      - vehicleId: "toyota-camry-2022-25l-4cyl"
+                        make: Toyota
+                        model: Camry
+                        year: 2022
+                        engine: "2.5L 4-Cylinder"
+                        trim: LE
+                        fuelType: Gasoline
+                    count: 1
+        '400':
+          description: Missing required parameters
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /vin/{vin}:
+    get:
+      operationId: decodeVin
+      summary: Vehicle Databases Decode VIN
+      description: >-
+        Decode a 17-character Vehicle Identification Number (VIN) to extract
+        make, model, year, engine, body style, trim, transmission, drive type,
+        and plant of manufacture.
+      tags:
+        - Vehicles
+      parameters:
+        - name: vin
+          in: path
+          required: true
+          description: "17-character Vehicle Identification Number"
+          schema:
+            type: string
+            pattern: "^[A-HJ-NPR-Z0-9]{17}$"
+          example: 4T1C11AK2NU123456
+      responses:
+        '200':
+          description: Decoded VIN data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleDetail'
+              examples:
+                DecodeVin200Example:
+                  summary: Default decodeVin 200 response
+                  x-microcks-default: true
+                  value:
+                    vin: 4T1C11AK2NU123456
+                    vehicleId: "toyota-camry-2022-25l-4cyl"
+                    make: Toyota
+                    model: Camry
+                    year: 2022
+                    engine: "2.5L 4-Cylinder"
+                    trim: LE
+                    bodyStyle: Sedan
+                    fuelType: Gasoline
+                    transmission: Automatic
+                    driveType: FWD
+                    plantCountry: Japan
+        '400':
+          description: Invalid VIN format
+        '404':
+          description: VIN not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /maintenance/{vehicleId}:
+    get:
+      operationId: getMaintenanceSchedule
+      summary: Vehicle Databases Get Maintenance Schedule
+      description: >-
+        Returns the complete OEM-compliant maintenance schedule for a vehicle,
+        including all service intervals from 5,000 to 200,000 miles with
+        service items, fluids, and estimated costs for each interval.
+      tags:
+        - Maintenance
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: "Vehicle identifier from lookup or VIN decode"
+          schema:
+            type: string
+          example: toyota-camry-2022-25l-4cyl
+        - name: mileage
+          in: query
+          description: "Current vehicle mileage to filter upcoming services"
+          schema:
+            type: integer
+            minimum: 0
+          example: 45000
+        - name: includeItems
+          in: query
+          description: "Include detailed service items in response"
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: Complete maintenance schedule with service intervals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceSchedule'
+              examples:
+                GetMaintenanceSchedule200Example:
+                  summary: Default getMaintenanceSchedule 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: "toyota-camry-2022-25l-4cyl"
+                    make: Toyota
+                    model: Camry
+                    year: 2022
+                    intervals:
+                      - mileage: 50000
+                        months: 48
+                        label: "50,000 Mile Service"
+                        services:
+                          - serviceId: "oil-change"
+                            name: Engine Oil and Filter Change
+                            category: Engine
+                            fluidSpec: "0W-20 Full Synthetic"
+                            intervalMiles: 10000
+                            laborHours: 0.5
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /services/{vehicleId}:
+    get:
+      operationId: listServiceItems
+      summary: Vehicle Databases List Service Items
+      description: >-
+        Returns all service items for a vehicle at a specific mileage interval,
+        including fluid specifications, part numbers, labor time estimates,
+        and OEM-required procedures.
+      tags:
+        - Services
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: "Vehicle identifier"
+          schema:
+            type: string
+          example: toyota-camry-2022-25l-4cyl
+        - name: mileage
+          in: query
+          required: true
+          description: "Service interval mileage"
+          schema:
+            type: integer
+          example: 50000
+      responses:
+        '200':
+          description: Service items for the mileage interval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceItemListResponse'
+              examples:
+                ListServiceItems200Example:
+                  summary: Default listServiceItems 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: "toyota-camry-2022-25l-4cyl"
+                    mileage: 50000
+                    items:
+                      - serviceId: "oil-change"
+                        name: Engine Oil and Filter Change
+                        category: Engine
+                        description: "Change engine oil and oil filter"
+                        fluidSpec: "0W-20 Full Synthetic"
+                        quantity: "5 quarts"
+                        laborHours: 0.5
+                        oilFilterPartNumber: "04152-YZZA1"
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /recalls/{vehicleId}:
+    get:
+      operationId: getRecalls
+      summary: Vehicle Databases Get Recalls
+      description: >-
+        Returns NHTSA safety recall information for a specific vehicle including
+        recall dates, components affected, risk descriptions, and remedy status.
+      tags:
+        - Recalls
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: "Vehicle identifier"
+          schema:
+            type: string
+          example: toyota-camry-2022-25l-4cyl
+      responses:
+        '200':
+          description: NHTSA recall data for the vehicle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecallListResponse'
+              examples:
+                GetRecalls200Example:
+                  summary: Default getRecalls 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: "toyota-camry-2022-25l-4cyl"
+                    recalls:
+                      - recallId: "22V-123"
+                        component: "Air Bags"
+                        summary: "The inflator rupture may result in metal fragments striking occupants"
+                        recallDate: "2022-06-15"
+                        remedyDate: "2022-09-01"
+                        remedyDescription: "Dealers will replace the airbag inflator free of charge"
+                        remedyStatus: complete
+                    count: 1
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /tsb/{vehicleId}:
+    get:
+      operationId: getTSBs
+      summary: Vehicle Databases Get TSBs
+      description: >-
+        Returns technical service bulletins (TSBs) issued by the OEM for a
+        specific vehicle, including symptoms, diagnosis procedures, and
+        corrective actions.
+      tags:
+        - TSBs
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: "Vehicle identifier"
+          schema:
+            type: string
+          example: toyota-camry-2022-25l-4cyl
+        - name: category
+          in: query
+          description: "TSB category filter (e.g. Engine, Electrical, HVAC)"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Technical service bulletins for the vehicle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TSBListResponse'
+              examples:
+                GetTSBs200Example:
+                  summary: Default getTSBs 200 response
+                  x-microcks-default: true
+                  value:
+                    vehicleId: "toyota-camry-2022-25l-4cyl"
+                    tsbs:
+                      - tsbId: "TC22-0043"
+                        title: "Engine Hesitation at Cold Start"
+                        category: Engine
+                        issueDate: "2022-03-10"
+                        symptoms:
+                          - "Engine hesitation or rough idle during cold start"
+                          - "Check Engine light with code P0300"
+                        remedy: "Update PCM software to version 2.3.1"
+                    count: 1
+        '404':
+          description: Vehicle not found
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: "Vehicle Databases API key"
+
+  schemas:
+    VehicleDetail:
+      type: object
+      description: "Detailed vehicle information from VIN or lookup"
+      properties:
+        vin:
+          type: string
+          description: "17-character VIN"
+          example: 4T1C11AK2NU123456
+        vehicleId:
+          type: string
+          description: "Internal vehicle identifier for API requests"
+          example: toyota-camry-2022-25l-4cyl
+        make:
+          type: string
+          description: "Vehicle make"
+          example: Toyota
+        model:
+          type: string
+          description: "Vehicle model"
+          example: Camry
+        year:
+          type: integer
+          description: "Model year"
+          example: 2022
+        engine:
+          type: string
+          description: "Engine description"
+          example: "2.5L 4-Cylinder"
+        trim:
+          type: string
+          description: "Trim level"
+          example: LE
+        bodyStyle:
+          type: string
+          description: "Vehicle body style"
+          example: Sedan
+        fuelType:
+          type: string
+          description: "Fuel type"
+          example: Gasoline
+        transmission:
+          type: string
+          description: "Transmission type"
+          example: Automatic
+        driveType:
+          type: string
+          description: "Drive type (FWD, RWD, AWD, 4WD)"
+          example: FWD
+        plantCountry:
+          type: string
+          description: "Country of manufacture"
+          example: Japan
+
+    VehicleListResponse:
+      type: object
+      description: "List of vehicles matching make/model/year lookup"
+      properties:
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleDetail'
+        count:
+          type: integer
+
+    MaintenanceInterval:
+      type: object
+      description: "A single mileage/time-based maintenance interval"
+      properties:
+        mileage:
+          type: integer
+          description: "Service mileage interval"
+          example: 50000
+        months:
+          type: integer
+          description: "Time-based interval in months"
+          example: 48
+        label:
+          type: string
+          description: "Human-readable interval label"
+          example: "50,000 Mile Service"
+        services:
+          type: array
+          description: "Service items required at this interval"
+          items:
+            $ref: '#/components/schemas/ServiceItem'
+
+    MaintenanceSchedule:
+      type: object
+      description: "Complete OEM maintenance schedule with all service intervals"
+      properties:
+        vehicleId:
+          type: string
+          description: "Vehicle identifier"
+          example: toyota-camry-2022-25l-4cyl
+        make:
+          type: string
+          example: Toyota
+        model:
+          type: string
+          example: Camry
+        year:
+          type: integer
+          example: 2022
+        intervals:
+          type: array
+          description: "All maintenance intervals up to 200,000 miles"
+          items:
+            $ref: '#/components/schemas/MaintenanceInterval'
+
+    ServiceItem:
+      type: object
+      description: "Individual service item within a maintenance interval"
+      properties:
+        serviceId:
+          type: string
+          description: "Service identifier"
+          example: oil-change
+        name:
+          type: string
+          description: "Service name"
+          example: Engine Oil and Filter Change
+        category:
+          type: string
+          description: "Service category"
+          enum: [Engine, Transmission, Brakes, Tires, Electrical, HVAC, Fuel, Cooling, Suspension, Body]
+          example: Engine
+        description:
+          type: string
+          description: "Service procedure description"
+        fluidSpec:
+          type: string
+          description: "Required fluid specification"
+          example: "0W-20 Full Synthetic"
+        quantity:
+          type: string
+          description: "Fluid or part quantity required"
+          example: "5 quarts"
+        laborHours:
+          type: number
+          description: "Estimated labor time in hours"
+          example: 0.5
+        oilFilterPartNumber:
+          type: string
+          description: "OEM part number"
+          example: "04152-YZZA1"
+        intervalMiles:
+          type: integer
+          description: "Service interval in miles"
+          example: 10000
+
+    ServiceItemListResponse:
+      type: object
+      description: "Service items for a vehicle at a specific mileage"
+      properties:
+        vehicleId:
+          type: string
+        mileage:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItem'
+
+    Recall:
+      type: object
+      description: "NHTSA safety recall for a vehicle"
+      properties:
+        recallId:
+          type: string
+          description: "NHTSA recall identifier"
+          example: "22V-123"
+        component:
+          type: string
+          description: "Vehicle component affected"
+          example: "Air Bags"
+        summary:
+          type: string
+          description: "Recall risk summary"
+        recallDate:
+          type: string
+          format: date
+          description: "Recall initiation date"
+          example: "2022-06-15"
+        remedyDate:
+          type: string
+          format: date
+          description: "Remedy available date"
+          example: "2022-09-01"
+        remedyDescription:
+          type: string
+          description: "Description of the remedy"
+        remedyStatus:
+          type: string
+          enum: [pending, available, complete]
+          description: "Recall remedy status"
+
+    RecallListResponse:
+      type: object
+      description: "NHTSA recalls for a vehicle"
+      properties:
+        vehicleId:
+          type: string
+        recalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recall'
+        count:
+          type: integer
+
+    TSB:
+      type: object
+      description: "Technical service bulletin from the OEM"
+      properties:
+        tsbId:
+          type: string
+          description: "TSB identifier"
+          example: "TC22-0043"
+        title:
+          type: string
+          description: "TSB title"
+          example: "Engine Hesitation at Cold Start"
+        category:
+          type: string
+          description: "TSB category"
+          example: Engine
+        issueDate:
+          type: string
+          format: date
+          description: "TSB issue date"
+          example: "2022-03-10"
+        symptoms:
+          type: array
+          items:
+            type: string
+          description: "Observable symptoms"
+        remedy:
+          type: string
+          description: "Corrective action"
+
+    TSBListResponse:
+      type: object
+      description: "Technical service bulletins for a vehicle"
+      properties:
+        vehicleId:
+          type: string
+        tsbs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TSB'
+        count:
+          type: integer
