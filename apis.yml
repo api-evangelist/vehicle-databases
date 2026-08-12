@@ -49,16 +49,12 @@ apis:
     url: json-schema/vehicle-databases-maintenance-schedule-schema.json
   - type: JSONSchema
     url: json-schema/vehicle-databases-service-item-schema.json
-  - type: JSONSchema
-    url: json-schema/vehicle-databases-vehicle-schema.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-maintenance-schedule-structure.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-service-item-structure.json
   - type: Examples
     url: examples/vehicle-databases-maintenance-schedule-example.json
-  - type: Examples
-    url: examples/vehicle-databases-vehicle-example.json
 - aid: vehicle-databases:vehicle-databases-recalls-api
   name: Vehicle Databases Recalls API
   description: NHTSA safety recall data
@@ -76,16 +72,12 @@ apis:
     url: json-schema/vehicle-databases-maintenance-schedule-schema.json
   - type: JSONSchema
     url: json-schema/vehicle-databases-service-item-schema.json
-  - type: JSONSchema
-    url: json-schema/vehicle-databases-vehicle-schema.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-maintenance-schedule-structure.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-service-item-structure.json
   - type: Examples
     url: examples/vehicle-databases-maintenance-schedule-example.json
-  - type: Examples
-    url: examples/vehicle-databases-vehicle-example.json
 - aid: vehicle-databases:vehicle-databases-services-api
   name: Vehicle Databases Services API
   description: Service items, fluids, and parts
@@ -103,16 +95,12 @@ apis:
     url: json-schema/vehicle-databases-maintenance-schedule-schema.json
   - type: JSONSchema
     url: json-schema/vehicle-databases-service-item-schema.json
-  - type: JSONSchema
-    url: json-schema/vehicle-databases-vehicle-schema.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-maintenance-schedule-structure.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-service-item-structure.json
   - type: Examples
     url: examples/vehicle-databases-maintenance-schedule-example.json
-  - type: Examples
-    url: examples/vehicle-databases-vehicle-example.json
 - aid: vehicle-databases:vehicle-databases-tsbs-api
   name: Vehicle Databases TSBs API
   description: Technical service bulletins
@@ -130,16 +118,12 @@ apis:
     url: json-schema/vehicle-databases-maintenance-schedule-schema.json
   - type: JSONSchema
     url: json-schema/vehicle-databases-service-item-schema.json
-  - type: JSONSchema
-    url: json-schema/vehicle-databases-vehicle-schema.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-maintenance-schedule-structure.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-service-item-structure.json
   - type: Examples
     url: examples/vehicle-databases-maintenance-schedule-example.json
-  - type: Examples
-    url: examples/vehicle-databases-vehicle-example.json
 - aid: vehicle-databases:vehicle-databases-vehicles-api
   name: Vehicle Databases Vehicles API
   description: Vehicle lookup and VIN decoding
@@ -157,16 +141,12 @@ apis:
     url: json-schema/vehicle-databases-maintenance-schedule-schema.json
   - type: JSONSchema
     url: json-schema/vehicle-databases-service-item-schema.json
-  - type: JSONSchema
-    url: json-schema/vehicle-databases-vehicle-schema.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-maintenance-schedule-structure.json
   - type: JSONStructure
     url: json-structure/vehicle-databases-service-item-structure.json
   - type: Examples
     url: examples/vehicle-databases-maintenance-schedule-example.json
-  - type: Examples
-    url: examples/vehicle-databases-vehicle-example.json
 common:
   - type: AgenticAccess
     url: agentic-access/vehicle-databases-agentic-access.yml
