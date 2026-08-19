@@ -1,0 +1,455 @@
+{
+  "item": [
+    {
+      "id": "047658fe-e699-4a94-852d-b431f9833fe5",
+      "name": "Vehicles",
+      "description": {
+        "content": "Vehicle lookup and VIN decoding",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "35f6f2cc-fb62-4f70-b4bc-cc58c6d11c2b",
+          "name": "Vehicle Databases Lookup Vehicle",
+          "request": {
+            "name": "Vehicle Databases Lookup Vehicle",
+            "description": {
+              "content": "Look up vehicle information by make, model, and year. Returns available engine options, trim levels, and vehicle identifiers for use in subsequent maintenance schedule and service lookups.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vehicle"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "make",
+                  "value": "<string>",
+                  "description": "(Required) Vehicle make (e.g. Toyota, Ford, Chevrolet)"
+                },
+                {
+                  "disabled": false,
+                  "key": "model",
+                  "value": "<string>",
+                  "description": "(Required) Vehicle model (e.g. Camry, F-150)"
+                },
+                {
+                  "disabled": false,
+                  "key": "year",
+                  "value": "<integer>",
+                  "description": "(Required) 4-digit model year"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "406edb86-66ff-4b3e-a532-3d7232f45cf3",
+              "name": "Vehicle information with engine options",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "make",
+                      "value": "Toyota"
+                    },
+                    {
+                      "key": "model",
+                      "value": "Camry"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicles\": [\n    {\n      \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n      \"make\": \"Toyota\",\n      \"model\": \"Camry\",\n      \"year\": 2022,\n      \"engine\": \"2.5L 4-Cylinder\",\n      \"trim\": \"LE\",\n      \"fuelType\": \"Gasoline\"\n    }\n  ],\n  \"count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a17d2ff-42e5-4c56-bde7-e7da9f590c61",
+              "name": "Missing required parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "make",
+                      "value": "Toyota"
+                    },
+                    {
+                      "key": "model",
+                      "value": "Camry"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "83396cc9-0591-4319-8b4a-2924d1b5cbfa",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vehicle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "make",
+                      "value": "Toyota"
+                    },
+                    {
+                      "key": "model",
+                      "value": "Camry"
+                    },
+                    {
+                      "key": "year",
+                      "value": "2022"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b02bc738-c82f-4d18-b381-5dffdf957357",
+          "name": "Vehicle Databases Decode VIN",
+          "request": {
+            "name": "Vehicle Databases Decode VIN",
+            "description": {
+              "content": "Decode a 17-character Vehicle Identification Number (VIN) to extract make, model, year, engine, body style, trim, transmission, drive type, and plant of manufacture.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vin",
+                ":vin"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vin",
+                  "description": "(Required) 17-character Vehicle Identification Number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6735252-0f18-4b9d-abf0-804e21daca30",
+              "name": "Decoded VIN data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vin",
+                    ":vin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) 17-character Vehicle Identification Number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vin\": \"4T1C11AK2NU123456\",\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2022,\n  \"engine\": \"2.5L 4-Cylinder\",\n  \"trim\": \"LE\",\n  \"bodyStyle\": \"Sedan\",\n  \"fuelType\": \"Gasoline\",\n  \"transmission\": \"Automatic\",\n  \"driveType\": \"FWD\",\n  \"plantCountry\": \"Japan\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16bae031-98c6-45a4-b71d-08b62421eb64",
+              "name": "Invalid VIN format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vin",
+                    ":vin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) 17-character Vehicle Identification Number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6aa6b9ca-5728-4125-a9b9-d113f367f990",
+              "name": "VIN not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vin",
+                    ":vin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vin",
+                      "description": "(Required) 17-character Vehicle Identification Number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.vehicledatabases.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "485e6b4b-4d5a-4f0e-a2c5-8e41a5ffc953",
+    "name": "Vehicle Databases Maintenance Vehicles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.\n\nContact Support:\n Name: Vehicle Databases Support",
+      "type": "text/plain"
+    }
+  }
+}

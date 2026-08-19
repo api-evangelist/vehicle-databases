@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vehicle Databases Maintenance TSBs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TSBs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Vehicle Databases Get TSBs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vehicledatabases.com/v1/tsb/:vehicleId",
+            "params": [
+              {
+                "name": "vehicleId",
+                "value": "toyota-camry-2022-25l-4cyl",
+                "type": "path",
+                "description": "Vehicle identifier"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "TSB category filter (e.g. Engine, Electrical, HVAC)"
+              }
+            ]
+          },
+          "docs": "Returns technical service bulletins (TSBs) issued by the OEM for a specific vehicle, including symptoms, diagnosis procedures, and corrective actions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

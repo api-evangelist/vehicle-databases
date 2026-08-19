@@ -1,0 +1,193 @@
+{
+  "item": [
+    {
+      "id": "f9eaf0f0-69d2-4c4d-b62f-2310a05da896",
+      "name": "Recalls",
+      "description": {
+        "content": "NHTSA safety recall data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c0c503b-69d1-4515-ba5f-94383ad40c42",
+          "name": "Vehicle Databases Get Recalls",
+          "request": {
+            "name": "Vehicle Databases Get Recalls",
+            "description": {
+              "content": "Returns NHTSA safety recall information for a specific vehicle including recall dates, components affected, risk descriptions, and remedy status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "recalls",
+                ":vehicleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vehicleId",
+                  "description": "(Required) Vehicle identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2f88da01-9f81-4562-bbd2-0527fe6f465a",
+              "name": "NHTSA recall data for the vehicle",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recalls",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"recalls\": [\n    {\n      \"recallId\": \"22V-123\",\n      \"component\": \"Air Bags\",\n      \"summary\": \"The inflator rupture may result in metal fragments striking occupants\",\n      \"recallDate\": \"2022-06-15\",\n      \"remedyDate\": \"2022-09-01\",\n      \"remedyDescription\": \"Dealers will replace the airbag inflator free of charge\",\n      \"remedyStatus\": \"complete\"\n    }\n  ],\n  \"count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b051159d-3e3a-4496-b76c-fc8cbd4d946c",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "recalls",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.vehicledatabases.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "55818000-19fd-4cd3-9c8a-6827484309d0",
+    "name": "Vehicle Databases Maintenance Recalls API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.\n\nContact Support:\n Name: Vehicle Databases Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "item": [
+    {
+      "id": "9de40a04-edc9-44c7-9e4e-c620ce2b534d",
+      "name": "TSBs",
+      "description": {
+        "content": "Technical service bulletins",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6f6bc789-4c8f-4c62-a817-42db785b54d7",
+          "name": "Vehicle Databases Get TSBs",
+          "request": {
+            "name": "Vehicle Databases Get TSBs",
+            "description": {
+              "content": "Returns technical service bulletins (TSBs) issued by the OEM for a specific vehicle, including symptoms, diagnosis procedures, and corrective actions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tsb",
+                ":vehicleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "TSB category filter (e.g. Engine, Electrical, HVAC)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vehicleId",
+                  "description": "(Required) Vehicle identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "79350c40-fd24-44d8-b9cd-b6a26e614069",
+              "name": "Technical service bulletins for the vehicle",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tsb",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"tsbs\": [\n    {\n      \"tsbId\": \"TC22-0043\",\n      \"title\": \"Engine Hesitation at Cold Start\",\n      \"category\": \"Engine\",\n      \"issueDate\": \"2022-03-10\",\n      \"symptoms\": [\n        \"Engine hesitation or rough idle during cold start\",\n        \"Check Engine light with code P0300\"\n      ],\n      \"remedy\": \"Update PCM software to version 2.3.1\"\n    }\n  ],\n  \"count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75193aa0-ab49-4917-9102-7fcff43631b3",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tsb",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.vehicledatabases.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "30f9a00f-876d-4fcd-bf99-03ed23417176",
+    "name": "Vehicle Databases Maintenance TSBs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.\n\nContact Support:\n Name: Vehicle Databases Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "item": [
+    {
+      "id": "fab79a2e-3c26-4bb8-90d4-b2820a92dbbe",
+      "name": "Maintenance",
+      "description": {
+        "content": "OEM maintenance schedules and service intervals",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5de92d60-a672-4ee6-a32a-51f19ba3a405",
+          "name": "Vehicle Databases Get Maintenance Schedule",
+          "request": {
+            "name": "Vehicle Databases Get Maintenance Schedule",
+            "description": {
+              "content": "Returns the complete OEM-compliant maintenance schedule for a vehicle, including all service intervals from 5,000 to 200,000 miles with service items, fluids, and estimated costs for each interval.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "maintenance",
+                ":vehicleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "mileage",
+                  "value": "<integer>",
+                  "description": "Current vehicle mileage to filter upcoming services"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeItems",
+                  "value": "true",
+                  "description": "Include detailed service items in response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vehicleId",
+                  "description": "(Required) Vehicle identifier from lookup or VIN decode"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a118a70a-6df5-4e9b-a842-5bb1748c6b79",
+              "name": "Complete maintenance schedule with service intervals",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maintenance",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mileage",
+                      "value": "45000"
+                    },
+                    {
+                      "key": "includeItems",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier from lookup or VIN decode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2022,\n  \"intervals\": [\n    {\n      \"mileage\": 50000,\n      \"months\": 48,\n      \"label\": \"50,000 Mile Service\",\n      \"services\": [\n        {\n          \"serviceId\": \"oil-change\",\n          \"name\": \"Engine Oil and Filter Change\",\n          \"category\": \"Engine\",\n          \"fluidSpec\": \"0W-20 Full Synthetic\",\n          \"intervalMiles\": 10000,\n          \"laborHours\": 0.5\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6b76855-413f-47c8-87eb-1eb50ca28dc6",
+              "name": "Vehicle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "maintenance",
+                    ":vehicleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "mileage",
+                      "value": "45000"
+                    },
+                    {
+                      "key": "includeItems",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vehicleId",
+                      "description": "(Required) Vehicle identifier from lookup or VIN decode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.vehicledatabases.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3bbe6ebc-22c7-4608-b541-00fa92c90589",
+    "name": "Vehicle Databases Maintenance API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.\n\nContact Support:\n Name: Vehicle Databases Support",
+      "type": "text/plain"
+    }
+  }
+}

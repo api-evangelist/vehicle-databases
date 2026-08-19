@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vehicle Databases Maintenance Recalls API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recalls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Vehicle Databases Get Recalls",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vehicledatabases.com/v1/recalls/:vehicleId",
+            "params": [
+              {
+                "name": "vehicleId",
+                "value": "toyota-camry-2022-25l-4cyl",
+                "type": "path",
+                "description": "Vehicle identifier"
+              }
+            ]
+          },
+          "docs": "Returns NHTSA safety recall information for a specific vehicle including recall dates, components affected, risk descriptions, and remedy status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

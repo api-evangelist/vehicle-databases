@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vehicle Databases Maintenance Vehicles API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vehicles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Vehicle Databases Lookup Vehicle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vehicledatabases.com/v1/vehicle",
+            "params": [
+              {
+                "name": "make",
+                "value": "Toyota",
+                "type": "query",
+                "description": "Vehicle make (e.g. Toyota, Ford, Chevrolet)"
+              },
+              {
+                "name": "model",
+                "value": "Camry",
+                "type": "query",
+                "description": "Vehicle model (e.g. Camry, F-150)"
+              },
+              {
+                "name": "year",
+                "value": "2022",
+                "type": "query",
+                "description": "4-digit model year"
+              }
+            ]
+          },
+          "docs": "Look up vehicle information by make, model, and year. Returns available engine options, trim levels, and vehicle identifiers for use in subsequent maintenance schedule and service lookups."
+        },
+        {
+          "info": {
+            "name": "Vehicle Databases Decode VIN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vehicledatabases.com/v1/vin/:vin",
+            "params": [
+              {
+                "name": "vin",
+                "value": "4T1C11AK2NU123456",
+                "type": "path",
+                "description": "17-character Vehicle Identification Number"
+              }
+            ]
+          },
+          "docs": "Decode a 17-character Vehicle Identification Number (VIN) to extract make, model, year, engine, body style, trim, transmission, drive type, and plant of manufacture."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

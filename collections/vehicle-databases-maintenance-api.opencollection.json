@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vehicle Databases Maintenance API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-Key",
+      "value": "{{X-API-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Maintenance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Vehicle Databases Get Maintenance Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vehicledatabases.com/v1/maintenance/:vehicleId",
+            "params": [
+              {
+                "name": "vehicleId",
+                "value": "toyota-camry-2022-25l-4cyl",
+                "type": "path",
+                "description": "Vehicle identifier from lookup or VIN decode"
+              },
+              {
+                "name": "mileage",
+                "value": "45000",
+                "type": "query",
+                "description": "Current vehicle mileage to filter upcoming services"
+              },
+              {
+                "name": "includeItems",
+                "value": "",
+                "type": "query",
+                "description": "Include detailed service items in response"
+              }
+            ]
+          },
+          "docs": "Returns the complete OEM-compliant maintenance schedule for a vehicle, including all service intervals from 5,000 to 200,000 miles with service items, fluids, and estimated costs for each interval."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
