@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Vehicle Databases Maintenance API
   description: Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.
@@ -81,6 +81,49 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    MaintenanceInterval:
+      type: object
+      description: A single mileage/time-based maintenance interval
+      properties:
+        mileage:
+          type: integer
+          description: Service mileage interval
+          example: 50000
+        months:
+          type: integer
+          description: Time-based interval in months
+          example: 48
+        label:
+          type: string
+          description: Human-readable interval label
+          example: 50,000 Mile Service
+        services:
+          type: array
+          description: Service items required at this interval
+          items:
+            $ref: '#/components/schemas/ServiceItem'
+    MaintenanceSchedule:
+      type: object
+      description: Complete OEM maintenance schedule with all service intervals
+      properties:
+        vehicleId:
+          type: string
+          description: Vehicle identifier
+          example: toyota-camry-2022-25l-4cyl
+        make:
+          type: string
+          example: Toyota
+        model:
+          type: string
+          example: Camry
+        year:
+          type: integer
+          example: 2022
+        intervals:
+          type: array
+          description: All maintenance intervals up to 200,000 miles
+          items:
+            $ref: '#/components/schemas/MaintenanceInterval'
     ServiceItem:
       type: object
       description: Individual service item within a maintenance interval
@@ -131,49 +174,6 @@ components:
           type: integer
           description: Service interval in miles
           example: 10000
-    MaintenanceInterval:
-      type: object
-      description: A single mileage/time-based maintenance interval
-      properties:
-        mileage:
-          type: integer
-          description: Service mileage interval
-          example: 50000
-        months:
-          type: integer
-          description: Time-based interval in months
-          example: 48
-        label:
-          type: string
-          description: Human-readable interval label
-          example: 50,000 Mile Service
-        services:
-          type: array
-          description: Service items required at this interval
-          items:
-            $ref: '#/components/schemas/ServiceItem'
-    MaintenanceSchedule:
-      type: object
-      description: Complete OEM maintenance schedule with all service intervals
-      properties:
-        vehicleId:
-          type: string
-          description: Vehicle identifier
-          example: toyota-camry-2022-25l-4cyl
-        make:
-          type: string
-          example: Toyota
-        model:
-          type: string
-          example: Camry
-        year:
-          type: integer
-          example: 2022
-        intervals:
-          type: array
-          description: All maintenance intervals up to 200,000 miles
-          items:
-            $ref: '#/components/schemas/MaintenanceInterval'
   securitySchemes:
     ApiKey:
       type: apiKey

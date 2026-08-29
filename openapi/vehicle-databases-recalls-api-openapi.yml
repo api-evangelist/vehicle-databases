@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Vehicle Databases Maintenance Recalls API
   description: Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.
@@ -63,18 +63,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    RecallListResponse:
-      type: object
-      description: NHTSA recalls for a vehicle
-      properties:
-        vehicleId:
-          type: string
-        recalls:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recall'
-        count:
-          type: integer
     Recall:
       type: object
       description: NHTSA safety recall for a vehicle
@@ -110,6 +98,18 @@ components:
           - available
           - complete
           description: Recall remedy status
+    RecallListResponse:
+      type: object
+      description: NHTSA recalls for a vehicle
+      properties:
+        vehicleId:
+          type: string
+        recalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recall'
+        count:
+          type: integer
   securitySchemes:
     ApiKey:
       type: apiKey
