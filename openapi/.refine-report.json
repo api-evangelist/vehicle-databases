@@ -1,11 +1,7 @@
 {
   "provider": "vehicle-databases",
   "sources": [
-    "vehicle-databases-maintenance-api-openapi.yml",
-    "vehicle-databases-recalls-api-openapi.yml",
-    "vehicle-databases-services-api-openapi.yml",
-    "vehicle-databases-tsbs-api-openapi.yml",
-    "vehicle-databases-vehicles-api-openapi.yml"
+    "_ae-authored/vehicle-databases-openapi.yml"
   ],
   "outputs": [
     "vehicle-databases-maintenance-api-openapi.yml",
@@ -18,12 +14,15 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "vehicle-databases-maintenance-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "vehicle-databases-recalls-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "vehicle-databases-services-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "vehicle-databases-tsbs-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "vehicle-databases-vehicles-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "vehicle-databases-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "vehicle-databases-maintenance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vehicle-databases-recalls-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vehicle-databases-services-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vehicle-databases-tsbs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vehicle-databases-vehicles-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
