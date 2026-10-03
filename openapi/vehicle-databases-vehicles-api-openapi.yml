@@ -127,16 +127,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    VehicleListResponse:
-      type: object
-      description: List of vehicles matching make/model/year lookup
-      properties:
-        vehicles:
-          type: array
-          items:
-            $ref: '#/components/schemas/VehicleDetail'
-        count:
-          type: integer
     VehicleDetail:
       type: object
       description: Detailed vehicle information from VIN or lookup
@@ -189,6 +179,16 @@ components:
           type: string
           description: Country of manufacture
           example: Japan
+    VehicleListResponse:
+      type: object
+      description: List of vehicles matching make/model/year lookup
+      properties:
+        vehicles:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleDetail'
+        count:
+          type: integer
   securitySchemes:
     ApiKey:
       type: apiKey

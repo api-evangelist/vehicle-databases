@@ -63,18 +63,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    RecallListResponse:
-      type: object
-      description: NHTSA recalls for a vehicle
-      properties:
-        vehicleId:
-          type: string
-        recalls:
-          type: array
-          items:
-            $ref: '#/components/schemas/Recall'
-        count:
-          type: integer
     Recall:
       type: object
       description: NHTSA safety recall for a vehicle
@@ -110,6 +98,18 @@ components:
           - available
           - complete
           description: Recall remedy status
+    RecallListResponse:
+      type: object
+      description: NHTSA recalls for a vehicle
+      properties:
+        vehicleId:
+          type: string
+        recalls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recall'
+        count:
+          type: integer
   securitySchemes:
     ApiKey:
       type: apiKey
