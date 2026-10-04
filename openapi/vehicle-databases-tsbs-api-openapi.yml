@@ -69,18 +69,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    TSBListResponse:
-      type: object
-      description: Technical service bulletins for a vehicle
-      properties:
-        vehicleId:
-          type: string
-        tsbs:
-          type: array
-          items:
-            $ref: '#/components/schemas/TSB'
-        count:
-          type: integer
     TSB:
       type: object
       description: Technical service bulletin from the OEM
@@ -110,6 +98,18 @@ components:
         remedy:
           type: string
           description: Corrective action
+    TSBListResponse:
+      type: object
+      description: Technical service bulletins for a vehicle
+      properties:
+        vehicleId:
+          type: string
+        tsbs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TSB'
+        count:
+          type: integer
   securitySchemes:
     ApiKey:
       type: apiKey

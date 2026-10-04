@@ -81,6 +81,28 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    MaintenanceSchedule:
+      type: object
+      description: Complete OEM maintenance schedule with all service intervals
+      properties:
+        vehicleId:
+          type: string
+          description: Vehicle identifier
+          example: toyota-camry-2022-25l-4cyl
+        make:
+          type: string
+          example: Toyota
+        model:
+          type: string
+          example: Camry
+        year:
+          type: integer
+          example: 2022
+        intervals:
+          type: array
+          description: All maintenance intervals up to 200,000 miles
+          items:
+            $ref: '#/components/schemas/MaintenanceInterval'
     MaintenanceInterval:
       type: object
       description: A single mileage/time-based maintenance interval
@@ -152,28 +174,6 @@ components:
           type: integer
           description: Service interval in miles
           example: 10000
-    MaintenanceSchedule:
-      type: object
-      description: Complete OEM maintenance schedule with all service intervals
-      properties:
-        vehicleId:
-          type: string
-          description: Vehicle identifier
-          example: toyota-camry-2022-25l-4cyl
-        make:
-          type: string
-          example: Toyota
-        model:
-          type: string
-          example: Camry
-        year:
-          type: integer
-          example: 2022
-        intervals:
-          type: array
-          description: All maintenance intervals up to 200,000 miles
-          items:
-            $ref: '#/components/schemas/MaintenanceInterval'
   securitySchemes:
     ApiKey:
       type: apiKey
