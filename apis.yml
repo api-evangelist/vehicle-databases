@@ -161,6 +161,12 @@ apis:
   - type: Examples
     url: examples/vehicle-databases-maintenance-schedule-example.json
 common:
+  - type: Plans
+    url: plans/vehicle-databases-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/vehicle-databases-rate-limits.yml
+  - type: FinOps
+    url: finops/vehicle-databases-finops.yml
   - type: AgenticAccess
     url: agentic-access/vehicle-databases-agentic-access.yml
   - type: DomainSecurity
