@@ -71,18 +71,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ServiceItemListResponse:
-      type: object
-      description: Service items for a vehicle at a specific mileage
-      properties:
-        vehicleId:
-          type: string
-        mileage:
-          type: integer
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceItem'
     ServiceItem:
       type: object
       description: Individual service item within a maintenance interval
@@ -133,6 +121,18 @@ components:
           type: integer
           description: Service interval in miles
           example: 10000
+    ServiceItemListResponse:
+      type: object
+      description: Service items for a vehicle at a specific mileage
+      properties:
+        vehicleId:
+          type: string
+        mileage:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceItem'
   securitySchemes:
     ApiKey:
       type: apiKey
