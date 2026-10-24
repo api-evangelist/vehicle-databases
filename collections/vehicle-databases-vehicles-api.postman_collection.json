@@ -1,429 +1,414 @@
 {
+  "info": {
+    "_postman_id": "d8a8dc43-fad5-4b2b-970c-cff6d53b484b",
+    "name": "Vehicle Databases Maintenance Vehicles API",
+    "description": "Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.\n\nContact Support:\n Name: Vehicle Databases Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:07:39.000Z",
+    "updatedAt": "2026-10-22T02:07:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d8a8dc43-fad5-4b2b-970c-cff6d53b484b"
+  },
   "item": [
     {
-      "id": "047658fe-e699-4a94-852d-b431f9833fe5",
-      "name": "Vehicles",
-      "description": {
-        "content": "Vehicle lookup and VIN decoding",
-        "type": "text/plain"
-      },
+      "name": "vehicle",
       "item": [
         {
-          "id": "35f6f2cc-fb62-4f70-b4bc-cc58c6d11c2b",
           "name": "Vehicle Databases Lookup Vehicle",
+          "id": "2f8a5a3f-bb8a-406f-b6e7-f02d9613a658",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Vehicle Databases Lookup Vehicle",
-            "description": {
-              "content": "Look up vehicle information by make, model, and year. Returns available engine options, trim levels, and vehicle identifiers for use in subsequent maintenance schedule and service lookups.",
-              "type": "text/plain"
-            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
             "url": {
+              "raw": "{{baseUrl}}/vehicle?make=<string>&model=<string>&year=<integer>",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "vehicle"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "(Required) Vehicle make (e.g. Toyota, Ford, Chevrolet)",
                   "key": "make",
-                  "value": "<string>",
-                  "description": "(Required) Vehicle make (e.g. Toyota, Ford, Chevrolet)"
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "(Required) Vehicle model (e.g. Camry, F-150)",
                   "key": "model",
-                  "value": "<string>",
-                  "description": "(Required) Vehicle model (e.g. Camry, F-150)"
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "(Required) 4-digit model year",
                   "key": "year",
-                  "value": "<integer>",
-                  "description": "(Required) 4-digit model year"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "406edb86-66ff-4b3e-a532-3d7232f45cf3",
-              "name": "Vehicle information with engine options",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vehicle"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "make",
-                      "value": "Toyota"
-                    },
-                    {
-                      "key": "model",
-                      "value": "Camry"
-                    },
-                    {
-                      "key": "year",
-                      "value": "2022"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "X-API-Key",
-                    "value": "<API Key>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"vehicles\": [\n    {\n      \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n      \"make\": \"Toyota\",\n      \"model\": \"Camry\",\n      \"year\": 2022,\n      \"engine\": \"2.5L 4-Cylinder\",\n      \"trim\": \"LE\",\n      \"fuelType\": \"Gasoline\"\n    }\n  ],\n  \"count\": 1\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2a17d2ff-42e5-4c56-bde7-e7da9f590c61",
-              "name": "Missing required parameters",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vehicle"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "make",
-                      "value": "Toyota"
-                    },
-                    {
-                      "key": "model",
-                      "value": "Camry"
-                    },
-                    {
-                      "key": "year",
-                      "value": "2022"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "X-API-Key",
-                    "value": "<API Key>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Bad Request",
-              "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "83396cc9-0591-4319-8b4a-2924d1b5cbfa",
-              "name": "Vehicle not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "vehicle"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "make",
-                      "value": "Toyota"
-                    },
-                    {
-                      "key": "model",
-                      "value": "Camry"
-                    },
-                    {
-                      "key": "year",
-                      "value": "2022"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "X-API-Key",
-                    "value": "<API Key>"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "b02bc738-c82f-4d18-b381-5dffdf957357",
-          "name": "Vehicle Databases Decode VIN",
-          "request": {
-            "name": "Vehicle Databases Decode VIN",
-            "description": {
-              "content": "Decode a 17-character Vehicle Identification Number (VIN) to extract make, model, year, engine, body style, trim, transmission, drive type, and plant of manufacture.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "vin",
-                ":vin"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "vin",
-                  "description": "(Required) 17-character Vehicle Identification Number"
+                  "value": "<integer>"
                 }
               ]
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
+            "description": "Look up vehicle information by make, model, and year. Returns available engine options, trim levels, and vehicle identifiers for use in subsequent maintenance schedule and service lookups."
           },
           "response": [
             {
-              "id": "d6735252-0f18-4b9d-abf0-804e21daca30",
-              "name": "Decoded VIN data",
+              "id": "f58e9df2-258c-4bc1-bc21-4d9521fe7533",
+              "name": "Vehicle information with engine options",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "vin",
-                    ":vin"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vin",
-                      "description": "(Required) 17-character Vehicle Identification Number"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
-                    "key": "X-API-Key",
-                    "value": "<API Key>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/vehicle?make=<string>&model=<string>&year=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vehicle"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Vehicle make (e.g. Toyota, Ford, Chevrolet)",
+                      "key": "make",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) Vehicle model (e.g. Camry, F-150)",
+                      "key": "model",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) 4-digit model year",
+                      "key": "year",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"vin\": \"4T1C11AK2NU123456\",\n  \"vehicleId\": \"toyota-camry-2022-25l-4cyl\",\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2022,\n  \"engine\": \"2.5L 4-Cylinder\",\n  \"trim\": \"LE\",\n  \"bodyStyle\": \"Sedan\",\n  \"fuelType\": \"Gasoline\",\n  \"transmission\": \"Automatic\",\n  \"driveType\": \"FWD\",\n  \"plantCountry\": \"Japan\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"vehicles\": [\n    {\n      \"vin\": \"<string>\",\n      \"vehicleId\": \"<string>\",\n      \"make\": \"<string>\",\n      \"model\": \"<string>\",\n      \"year\": \"<integer>\",\n      \"engine\": \"<string>\",\n      \"trim\": \"<string>\",\n      \"bodyStyle\": \"<string>\",\n      \"fuelType\": \"<string>\",\n      \"transmission\": \"<string>\",\n      \"driveType\": \"<string>\",\n      \"plantCountry\": \"<string>\"\n    },\n    {\n      \"vin\": \"<string>\",\n      \"vehicleId\": \"<string>\",\n      \"make\": \"<string>\",\n      \"model\": \"<string>\",\n      \"year\": \"<integer>\",\n      \"engine\": \"<string>\",\n      \"trim\": \"<string>\",\n      \"bodyStyle\": \"<string>\",\n      \"fuelType\": \"<string>\",\n      \"transmission\": \"<string>\",\n      \"driveType\": \"<string>\",\n      \"plantCountry\": \"<string>\"\n    }\n  ],\n  \"count\": \"<integer>\"\n}",
+              "createdAt": "2026-10-22T02:07:39.000Z",
+              "updatedAt": "2026-10-22T02:07:39.000Z",
+              "uid": "35240-f58e9df2-258c-4bc1-bc21-4d9521fe7533"
             },
             {
-              "id": "16bae031-98c6-45a4-b71d-08b62421eb64",
-              "name": "Invalid VIN format",
+              "id": "3172b7c0-2279-4b3c-8471-9ad0856984cd",
+              "name": "Missing required parameters",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "vin",
-                    ":vin"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vin",
-                      "description": "(Required) 17-character Vehicle Identification Number"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "description": "Added as a part of security scheme: apikey",
                     "key": "X-API-Key",
                     "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/vehicle?make=<string>&model=<string>&year=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vehicle"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Vehicle make (e.g. Toyota, Ford, Chevrolet)",
+                      "key": "make",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) Vehicle model (e.g. Camry, F-150)",
+                      "key": "model",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) 4-digit model year",
+                      "key": "year",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
               },
               "status": "Bad Request",
               "code": 400,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-22T02:07:39.000Z",
+              "updatedAt": "2026-10-22T02:07:39.000Z",
+              "uid": "35240-3172b7c0-2279-4b3c-8471-9ad0856984cd"
             },
             {
-              "id": "6aa6b9ca-5728-4125-a9b9-d113f367f990",
-              "name": "VIN not found",
+              "id": "8a983cfc-259f-431f-b623-b198dacfa981",
+              "name": "Vehicle not found",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "vin",
-                    ":vin"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "vin",
-                      "description": "(Required) 17-character Vehicle Identification Number"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
                   {
-                    "description": {
-                      "content": "Added as a part of security scheme: apikey",
-                      "type": "text/plain"
-                    },
+                    "description": "Added as a part of security scheme: apikey",
                     "key": "X-API-Key",
                     "value": "<API Key>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/vehicle?make=<string>&model=<string>&year=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vehicle"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Vehicle make (e.g. Toyota, Ford, Chevrolet)",
+                      "key": "make",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) Vehicle model (e.g. Camry, F-150)",
+                      "key": "model",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) 4-digit model year",
+                      "key": "year",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
               },
               "status": "Not Found",
               "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
+              "_postman_previewlanguage": "text",
+              "header": [],
               "cookie": [],
-              "_postman_previewlanguage": "text"
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-10-22T02:07:39.000Z",
+              "updatedAt": "2026-10-22T02:07:39.000Z",
+              "uid": "35240-8a983cfc-259f-431f-b623-b198dacfa981"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T02:07:39.000Z",
+          "updatedAt": "2026-10-22T02:07:39.000Z",
+          "uid": "35240-2f8a5a3f-bb8a-406f-b6e7-f02d9613a658"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
+      "id": "6d69a480-3033-4cf4-a9b7-929ba0eb31de",
+      "createdAt": "2026-10-22T02:07:39.000Z",
+      "updatedAt": "2026-10-22T02:07:39.000Z",
+      "uid": "35240-6d69a480-3033-4cf4-a9b7-929ba0eb31de"
+    },
     {
-      "type": "string",
-      "value": "https://api.vehicledatabases.com/v1",
-      "key": "baseUrl"
+      "name": "vin",
+      "item": [
+        {
+          "name": "{vin}",
+          "item": [
+            {
+              "name": "Vehicle Databases Decode VIN",
+              "id": "bdfd7a3e-a250-45a7-ad8a-89c3257872c3",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/vin/:vin",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "vin",
+                    ":vin"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ee285340-bd27-4512-9504-164b4f3d9f07",
+                      "key": "vin",
+                      "value": "MF6X8LR7KTTV4JUFT",
+                      "description": "(Required) 17-character Vehicle Identification Number"
+                    }
+                  ]
+                },
+                "description": "Decode a 17-character Vehicle Identification Number (VIN) to extract make, model, year, engine, body style, trim, transmission, drive type, and plant of manufacture."
+              },
+              "response": [
+                {
+                  "id": "3416f5e2-b44e-41cb-800b-492537808be9",
+                  "name": "Decoded VIN data",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vin/:vin",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vin",
+                        ":vin"
+                      ],
+                      "variable": [
+                        {
+                          "key": "vin"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"vin\": \"<string>\",\n  \"vehicleId\": \"<string>\",\n  \"make\": \"<string>\",\n  \"model\": \"<string>\",\n  \"year\": \"<integer>\",\n  \"engine\": \"<string>\",\n  \"trim\": \"<string>\",\n  \"bodyStyle\": \"<string>\",\n  \"fuelType\": \"<string>\",\n  \"transmission\": \"<string>\",\n  \"driveType\": \"<string>\",\n  \"plantCountry\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:07:39.000Z",
+                  "updatedAt": "2026-10-22T02:07:39.000Z",
+                  "uid": "35240-3416f5e2-b44e-41cb-800b-492537808be9"
+                },
+                {
+                  "id": "12fd9d02-f45c-45af-85f0-1afbfd2e57ed",
+                  "name": "Invalid VIN format",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vin/:vin",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vin",
+                        ":vin"
+                      ],
+                      "variable": [
+                        {
+                          "key": "vin"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:07:39.000Z",
+                  "updatedAt": "2026-10-22T02:07:39.000Z",
+                  "uid": "35240-12fd9d02-f45c-45af-85f0-1afbfd2e57ed"
+                },
+                {
+                  "id": "8ca8ae72-bdae-4e12-bf3e-4f539049e9b5",
+                  "name": "VIN not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-Key",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/vin/:vin",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "vin",
+                        ":vin"
+                      ],
+                      "variable": [
+                        {
+                          "key": "vin"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-22T02:07:39.000Z",
+                  "updatedAt": "2026-10-22T02:07:39.000Z",
+                  "uid": "35240-8ca8ae72-bdae-4e12-bf3e-4f539049e9b5"
+                }
+              ],
+              "createdAt": "2026-10-22T02:07:39.000Z",
+              "updatedAt": "2026-10-22T02:07:39.000Z",
+              "uid": "35240-bdfd7a3e-a250-45a7-ad8a-89c3257872c3"
+            }
+          ],
+          "id": "6f681157-9a7c-4755-979f-dafa295d2c1b",
+          "createdAt": "2026-10-22T02:07:39.000Z",
+          "updatedAt": "2026-10-22T02:07:39.000Z",
+          "uid": "35240-6f681157-9a7c-4755-979f-dafa295d2c1b"
+        }
+      ],
+      "id": "03077d60-4d80-4603-931a-261508786d4c",
+      "createdAt": "2026-10-22T02:07:39.000Z",
+      "updatedAt": "2026-10-22T02:07:39.000Z",
+      "uid": "35240-03077d60-4d80-4603-931a-261508786d4c"
     }
   ],
   "auth": {
@@ -431,25 +416,25 @@
     "apikey": [
       {
         "key": "key",
-        "value": "X-API-Key"
+        "value": "X-API-Key",
+        "type": "string"
       },
       {
         "key": "value",
-        "value": "{{apiKey}}"
+        "value": "{{apiKey}}",
+        "type": "string"
       },
       {
         "key": "in",
-        "value": "header"
+        "value": "header",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "485e6b4b-4d5a-4f0e-a2c5-8e41a5ffc953",
-    "name": "Vehicle Databases Maintenance Vehicles API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Vehicle Databases provides OEM-compliant vehicle maintenance schedules, service items, fluid specifications, VIN decoding, NHTSA recall data, and technical service bulletins (TSBs) for vehicles up to 200,000 miles. Used by fleet operators, repair shops, and consumer automotive applications.\n\nContact Support:\n Name: Vehicle Databases Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.vehicledatabases.com/v1"
     }
-  }
+  ]
 }
